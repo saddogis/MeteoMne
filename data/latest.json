@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-16T16:50:28.213331+00:00",
+  "updated_at": "2026-08-16T16:56:30.927953+00:00",
   "stations": [
     {
       "sifra": "02BAR010",
@@ -258,12 +258,12 @@
       "sifra": "02LKOT20",
       "tip": "klimatološka",
       "stanica": "Luka Kotor",
-      "datum_vrijeme": "16.08.2026 18:11",
-      "T": "29.10",
+      "datum_vrijeme": "16.08.2026 18:16",
+      "T": "29.00",
       "RR": "",
-      "vjetar": "0.50",
+      "vjetar": "0.30",
       "smjer_kod": "",
-      "udar": "1.90"
+      "udar": "1.10"
     },
     {
       "sifra": "02MAMO30",
