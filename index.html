@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Automatska mjerenja — Crna Gora</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -23,50 +23,57 @@
     --heat-dim: #7a5a2c;
     --cool: #4fb6c9;
     --live: #57c785;
+    --header-h: 54px;
+    --nav-h: 64px;
   }
   *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
+  html,body{margin:0;padding:0; height:100%; overscroll-behavior-y: none;}
   body{
-    background: radial-gradient(1200px 600px at 50% -10%, #16202b 0%, var(--bg) 55%);
+    background: var(--bg);
     color: var(--text);
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
-    padding-bottom: 3rem;
+    padding-top: var(--header-h);
+    padding-bottom: var(--nav-h);
   }
-  .num{ font-family: 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  button{ font-family: inherit; }
 
-  header{
-    position: sticky; top:0; z-index: 20;
-    background: rgba(16,21,28,0.88);
+  /* ---- Header ---- */
+  #app-header{
+    position: fixed; top:0; left:0; right:0; height: var(--header-h); z-index: 30;
+    background: rgba(16,21,28,0.92);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--line);
-    padding: 0.9rem 1rem 0.75rem;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 0 0.9rem;
   }
-  .eyebrow{
-    font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--muted-2); font-weight: 600; margin-bottom: 0.15rem;
+  #app-header h1{ font-size: 0.98rem; margin:0; font-weight:700; letter-spacing:-0.01em; }
+  .icon-btn{
+    background:none; border:none; color: var(--muted); padding:0.4rem; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
   }
-  h1{ font-size: 1.15rem; margin: 0; font-weight: 700; letter-spacing: -0.01em; }
-  .status-row{
-    display:flex; align-items:center; gap:0.4rem; margin-top:0.35rem;
-    font-size: 0.78rem; color: var(--muted);
-  }
-  .dot{
-    width:7px; height:7px; border-radius:50%; background: var(--live);
-    box-shadow: 0 0 0 0 rgba(87,199,133,0.6);
-    animation: pulse 2.2s infinite;
-    flex-shrink:0;
-  }
-  @keyframes pulse{
-    0%{ box-shadow: 0 0 0 0 rgba(87,199,133,0.55); }
-    70%{ box-shadow: 0 0 0 7px rgba(87,199,133,0); }
-    100%{ box-shadow: 0 0 0 0 rgba(87,199,133,0); }
-  }
-  @media (prefers-reduced-motion: reduce){ .dot{ animation: none; } }
 
-  main{ max-width: 640px; margin: 0 auto; padding: 1rem; }
+  /* ---- Bottom nav ---- */
+  #bottom-nav{
+    position: fixed; bottom:0; left:0; right:0; height: var(--nav-h); z-index: 30;
+    background: rgba(16,21,28,0.92);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+    display:flex;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .nav-btn{
+    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:0.2rem; background:none; border:none; color: var(--muted-2); cursor:pointer;
+    font-size: 0.68rem; font-weight:600;
+  }
+  .nav-btn.active{ color: var(--heat); }
+  .nav-btn svg{ width:20px; height:20px; }
 
-  /* ---- Hero ---- */
+  /* ---- Pregled view ---- */
+  #view-pregled{ max-width: 640px; margin: 0 auto; padding: 1rem; }
+  #view-pregled.hidden{ display:none; }
+
   .hero{
     position: relative;
     background: linear-gradient(160deg, var(--surface-2) 0%, var(--surface) 65%);
@@ -97,31 +104,13 @@
     border-top: 1px solid var(--line); position:relative;
   }
   .hero-stat-label{ font-size:0.66rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted-2); margin-bottom:0.2rem; }
-  .hero-stat-val{ font-size:0.98rem; color:var(--muted); display:flex; align-items:center; gap:0.3rem; }
+  .hero-stat-val{ font-size:0.98rem; color:var(--muted); }
 
-  /* ---- Map ---- */
-  .map-toggle{
-    display:flex; align-items:center; justify-content:space-between;
-    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
-    padding: 0.8rem 1rem; margin-bottom: 0.9rem; cursor: pointer;
-    font-size: 0.9rem; font-weight: 600;
-  }
-  .map-toggle svg{ transition: transform 0.2s ease; opacity: 0.6; }
-  .map-toggle.open svg{ transform: rotate(180deg); }
-  #map-wrap{
-    height: 0; overflow: hidden; border-radius: 14px; margin-bottom: 0.9rem;
-    transition: height 0.25s ease; border: 1px solid var(--line);
-  }
-  #map{ height: 380px; width: 100%; }
-
-  /* ---- Search ---- */
   .search-wrap{ position: relative; margin-bottom: 0.9rem; }
   .search-wrap svg{ position:absolute; left:0.85rem; top:50%; transform:translateY(-50%); opacity:0.45; }
   input[type=text]{
     width:100%; padding:0.7rem 0.9rem 0.7rem 2.5rem;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 12px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
     color: var(--text); font-size: 0.92rem; font-family: inherit;
   }
   input[type=text]::placeholder{ color: var(--muted-2); }
@@ -132,18 +121,10 @@
     color: var(--muted-2); font-weight: 700; margin: 1.1rem 0.2rem 0.5rem;
   }
 
-  /* ---- Station list ---- */
-  .list{
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    overflow: hidden;
-  }
+  .list{ background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
   .row{
     display:flex; align-items:center; justify-content:space-between;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid var(--line);
-    cursor: pointer;
+    padding: 0.75rem 1rem; border-bottom: 1px solid var(--line); cursor: pointer;
   }
   .row:last-child{ border-bottom:none; }
   .row:active{ background: var(--surface-2); }
@@ -161,40 +142,64 @@
     border-top: 1.5px solid var(--muted-2); border-right: 1.5px solid var(--muted-2);
     transform: rotate(calc(var(--deg, 0deg) - 45deg));
   }
-
   #empty{ display:none; text-align:center; color: var(--muted-2); font-size:0.85rem; padding: 2rem 1rem; }
   #err{ text-align:center; color:#e0777a; font-size:0.85rem; padding: 1rem; display:none; }
-  footer{ text-align:center; color: var(--muted-2); font-size: 0.7rem; margin-top: 1.5rem; line-height:1.6; }
 
-  /* ---- Station modal (bottom sheet) ---- */
-  #overlay{
-    position: fixed; inset:0; background: rgba(8,11,15,0.6);
-    display:none; z-index: 40;
+  /* ---- Mapa view ---- */
+  #view-mapa{
+    position: fixed; top: var(--header-h); bottom: var(--nav-h); left:0; right:0;
+    z-index: 5;
   }
-  #sheet{
-    position: fixed; left:0; right:0; bottom:0; z-index: 41;
+  #view-mapa.hidden{ display:none; }
+  #map{ width:100%; height:100%; }
+  .map-legend{
+    position:absolute; bottom:0.8rem; left:0.8rem; z-index: 400;
+    background: rgba(26,33,43,0.92); border: 1px solid var(--line); border-radius: 10px;
+    padding: 0.55rem 0.75rem; font-size: 0.72rem; color: var(--muted);
+    backdrop-filter: blur(6px);
+  }
+  .map-legend div{ display:flex; align-items:center; gap:0.4rem; margin: 0.15rem 0; }
+  .legend-dot{ width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+
+  /* ---- Info panel ---- */
+  #info-overlay, #detail-overlay{
+    position: fixed; inset:0; background: rgba(8,11,15,0.6); display:none; z-index: 50;
+  }
+  #info-panel{
+    position: fixed; left:0; right:0; bottom:0; z-index: 51;
     background: var(--surface-2); border-top: 1px solid var(--line);
-    border-radius: 18px 18px 0 0;
-    padding: 1.1rem 1.1rem 1.5rem;
-    transform: translateY(100%);
-    transition: transform 0.25s ease;
-    max-width: 640px; margin: 0 auto;
-    max-height: 85vh; overflow-y: auto;
+    border-radius: 18px 18px 0 0; padding: 1.1rem 1.1rem calc(1.5rem + env(safe-area-inset-bottom,0));
+    transform: translateY(100%); transition: transform 0.25s ease;
+    max-width: 640px; margin: 0 auto; max-height: 75vh; overflow-y:auto;
   }
-  #sheet.open{ transform: translateY(0); }
-  .sheet-handle{ width:36px; height:4px; background: var(--line); border-radius:2px; margin: 0 auto 0.9rem; }
-  .sheet-close{
-    position:absolute; top:1rem; right:1rem; background:none; border:none;
-    color: var(--muted); font-size:1.3rem; line-height:1; cursor:pointer; padding:0.2rem;
+  #info-panel.open{ transform: translateY(0); }
+  .sheet-handle{ width:36px; height:4px; background: var(--line); border-radius:2px; margin: 0 auto 1rem; }
+  .info-title{ font-size:1.05rem; font-weight:700; margin-bottom:0.6rem; }
+  .info-text{ font-size:0.85rem; color: var(--muted); line-height:1.6; margin-bottom:0.9rem; }
+  .info-text b{ color: var(--text); }
+
+  /* ---- Detail view (full screen) ---- */
+  #detail-view{
+    position: fixed; inset:0; z-index: 60; background: var(--bg);
+    transform: translateX(100%); transition: transform 0.25s ease;
+    display:flex; flex-direction:column;
   }
-  .sheet-name{ font-size: 1.15rem; font-weight:700; }
-  .sheet-time{ font-size: 0.78rem; color: var(--muted); margin-top:0.15rem; }
-  .sheet-note{ font-size: 0.74rem; color: var(--muted-2); margin-top:0.3rem; font-style: italic; }
-  .sheet-stats{ display:flex; gap:1.3rem; margin: 0.9rem 0 1.1rem; flex-wrap: wrap; }
-  .sheet-stat-label{ font-size:0.66rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted-2); margin-bottom:0.2rem; }
-  .sheet-stat-val{ font-size:1.1rem; font-weight:600; }
-  .sheet-stat-val.heat{ color: var(--heat); }
-  .sheet-stat-val.dim{ color: var(--muted-2); font-weight: 500; font-size: 0.95rem; }
+  #detail-view.open{ transform: translateX(0); }
+  .detail-header{
+    flex-shrink:0; height: var(--header-h); display:flex; align-items:center; gap:0.6rem;
+    padding: 0 0.9rem; border-bottom: 1px solid var(--line); background: var(--surface);
+  }
+  .detail-header .icon-btn{ padding: 0.3rem; }
+  .detail-header-name{ font-size: 1rem; font-weight:700; }
+  .detail-body{ flex:1; overflow-y:auto; padding: 1.1rem; padding-bottom: calc(2rem + env(safe-area-inset-bottom,0)); }
+
+  .detail-time{ font-size: 0.78rem; color: var(--muted); margin-bottom:0.3rem; }
+  .detail-note{ font-size: 0.74rem; color: var(--muted-2); margin-bottom:0.6rem; font-style: italic; }
+  .detail-stats{ display:flex; gap:1.3rem; margin: 0.9rem 0 1.1rem; flex-wrap: wrap; }
+  .detail-stat-label{ font-size:0.66rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted-2); margin-bottom:0.2rem; }
+  .detail-stat-val{ font-size:1.1rem; font-weight:600; }
+  .detail-stat-val.heat{ color: var(--heat); }
+  .detail-stat-val.dim{ color: var(--muted-2); font-weight: 500; font-size: 0.95rem; }
 
   .metric-tabs{ display:flex; gap:0.4rem; margin-bottom:0.7rem; flex-wrap: wrap; }
   .metric-tab{
@@ -205,11 +210,11 @@
   }
   .metric-tab.active{ background: var(--heat-dim); color: var(--heat); border-color: var(--heat-dim); }
 
-  .chart-wrap{ margin-top: 0.4rem; height: 190px; position: relative; }
-  .chart-empty{ font-size:0.8rem; color: var(--muted-2); text-align:center; padding: 2.6rem 0; }
+  .chart-wrap{ margin-top: 0.4rem; height: 200px; position: relative; }
+  .chart-empty{ font-size:0.8rem; color: var(--muted-2); text-align:center; padding: 2.8rem 0; }
 
   .star-btn{
-    display:block; width:100%; margin-top: 1rem; padding: 0.65rem;
+    display:block; width:100%; margin-top: 1.2rem; padding: 0.65rem;
     background: none; border: 1px solid var(--line); border-radius: 10px;
     color: var(--muted); font-size: 0.82rem; font-weight: 600; cursor:pointer;
   }
@@ -218,14 +223,14 @@
 </head>
 <body>
 
-<header>
-  <div class="eyebrow">ZHMS · Crna Gora</div>
-  <h1>Automatska mjerenja</h1>
-  <div class="status-row"><span class="dot"></span><span id="updated">Učitavanje...</span></div>
+<header id="app-header">
+  <h1>Automatska mjerenja · CG</h1>
+  <button class="icon-btn" id="info-btn" aria-label="Info">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16.5"/><circle cx="12" cy="7.7" r="0.5" fill="currentColor" stroke="none"/></svg>
+  </button>
 </header>
 
-<main>
-
+<div id="view-pregled">
   <div class="hero" id="hero" hidden>
     <div class="hero-top">
       <div>
@@ -236,26 +241,11 @@
       <div class="hero-temp"><span id="hero-t">—</span><sup>°C</sup></div>
     </div>
     <div class="hero-stats">
-      <div>
-        <div class="hero-stat-label">Padavine</div>
-        <div class="hero-stat-val" id="hero-rr">—</div>
-      </div>
-      <div>
-        <div class="hero-stat-label">Vjetar</div>
-        <div class="hero-stat-val" id="hero-wind">—</div>
-      </div>
-      <div>
-        <div class="hero-stat-label">Udar</div>
-        <div class="hero-stat-val" id="hero-gust">—</div>
-      </div>
+      <div><div class="hero-stat-label">Padavine</div><div class="hero-stat-val" id="hero-rr">—</div></div>
+      <div><div class="hero-stat-label">Vjetar</div><div class="hero-stat-val" id="hero-wind">—</div></div>
+      <div><div class="hero-stat-label">Udar</div><div class="hero-stat-val" id="hero-gust">—</div></div>
     </div>
   </div>
-
-  <div class="map-toggle" id="map-toggle">
-    <span>Mapa stanica</span>
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-  </div>
-  <div id="map-wrap"><div id="map"></div></div>
 
   <div class="search-wrap">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -266,53 +256,72 @@
   <div class="list" id="list"></div>
   <div id="empty">Nema stanica koje odgovaraju pretrazi.</div>
   <div id="err"></div>
+</div>
 
-  <footer>
-    Izvor: Zavod za hidrometeorologiju i seizmologiju Crne Gore.<br>
-    Napomena: zvanični izvor povremeno ima praznine u podacima za pojedine stanice (kvar senzora, prekid u prenosu) — takvi podaci se ovdje prikazuju kao „—". Insolacija i pritisak dostupni su samo za glavne stanice.
-  </footer>
-</main>
+<div id="view-mapa" class="hidden">
+  <div id="map"></div>
+  <div class="map-legend">
+    <div><span class="legend-dot" style="background:#f2a541"></span>Glavna stanica</div>
+    <div><span class="legend-dot" style="background:#4fb6c9"></span>Klimatološka stanica</div>
+  </div>
+</div>
 
-<div id="overlay"></div>
-<div id="sheet">
-  <button class="sheet-close" id="sheet-close" aria-label="Zatvori">&times;</button>
+<nav id="bottom-nav">
+  <button class="nav-btn active" id="nav-pregled" data-view="pregled">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+    Pregled
+  </button>
+  <button class="nav-btn" id="nav-mapa" data-view="mapa">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20 3 17V4l6 3 6-3 6 3v13l-6-3-6 3Z"/><line x1="9" y1="7" x2="9" y2="20"/><line x1="15" y1="7" x2="15" y2="20"/></svg>
+    Mapa
+  </button>
+</nav>
+
+<div id="info-overlay"></div>
+<div id="info-panel">
   <div class="sheet-handle"></div>
-  <div class="sheet-name" id="sheet-name">—</div>
-  <div class="sheet-time" id="sheet-time">—</div>
-  <div class="sheet-note" id="sheet-note" hidden></div>
-  <div class="sheet-stats">
-    <div>
-      <div class="sheet-stat-label">Temperatura</div>
-      <div class="sheet-stat-val heat" id="sheet-t">—</div>
-    </div>
-    <div>
-      <div class="sheet-stat-label">Padavine</div>
-      <div class="sheet-stat-val" id="sheet-rr">—</div>
-    </div>
-    <div>
-      <div class="sheet-stat-label">Vjetar</div>
-      <div class="sheet-stat-val" id="sheet-wind">—</div>
-    </div>
-    <div>
-      <div class="sheet-stat-label">Udar</div>
-      <div class="sheet-stat-val" id="sheet-gust">—</div>
-    </div>
+  <div class="info-title">O aplikaciji</div>
+  <div class="info-text">
+    Prikazuje automatska meteorološka mjerenja sa stanica širom Crne Gore, na osnovu javno dostupnih podataka
+    <b>Zavoda za hidrometeorologiju i seizmologiju Crne Gore (ZHMS)</b>. Podaci se osvježavaju automatski na svakih ~15 minuta.
   </div>
-
-  <div class="metric-tabs">
-    <div class="metric-tab active" data-metric="T">Temperatura</div>
-    <div class="metric-tab" data-metric="RR">Padavine</div>
-    <div class="metric-tab" data-metric="vjetar">Vjetar</div>
-    <div class="metric-tab" data-metric="insolacija">Insolacija</div>
-    <div class="metric-tab" data-metric="pritisak">Pritisak</div>
+  <div class="info-title">Napomena</div>
+  <div class="info-text">
+    Zvanični izvor povremeno ima praznine u podacima za pojedine stanice (kvar senzora, prekid u prenosu).
+    Takvi podaci se ovdje prikazuju kao „—". Insolacija i pritisak dostupni su samo za glavne stanice.
   </div>
+</div>
 
-  <div class="chart-wrap">
-    <canvas id="sheet-chart"></canvas>
-    <div class="chart-empty" id="sheet-chart-empty" hidden></div>
+<div id="detail-overlay"></div>
+<div id="detail-view">
+  <div class="detail-header">
+    <button class="icon-btn" id="detail-back" aria-label="Nazad">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="detail-header-name" id="detail-name">—</div>
   </div>
-
-  <button class="star-btn" id="star-btn">☆ Postavi kao istaknuto</button>
+  <div class="detail-body">
+    <div class="detail-time" id="detail-time">—</div>
+    <div class="detail-note" id="detail-note" hidden></div>
+    <div class="detail-stats">
+      <div><div class="detail-stat-label">Temperatura</div><div class="detail-stat-val heat" id="detail-t">—</div></div>
+      <div><div class="detail-stat-label">Padavine</div><div class="detail-stat-val" id="detail-rr">—</div></div>
+      <div><div class="detail-stat-label">Vjetar</div><div class="detail-stat-val" id="detail-wind">—</div></div>
+      <div><div class="detail-stat-label">Udar</div><div class="detail-stat-val" id="detail-gust">—</div></div>
+    </div>
+    <div class="metric-tabs">
+      <div class="metric-tab active" data-metric="T">Temperatura</div>
+      <div class="metric-tab" data-metric="RR">Padavine</div>
+      <div class="metric-tab" data-metric="vjetar">Vjetar</div>
+      <div class="metric-tab" data-metric="insolacija">Insolacija</div>
+      <div class="metric-tab" data-metric="pritisak">Pritisak</div>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="detail-chart"></canvas>
+      <div class="chart-empty" id="detail-chart-empty" hidden></div>
+    </div>
+    <button class="star-btn" id="star-btn">☆ Postavi kao istaknuto</button>
+  </div>
 </div>
 
 <script>
@@ -324,7 +333,6 @@ let currentSifra = null;
 let map, chart;
 const markers = {};
 
-/* Statička lista stanica: šifra -> {lat, lng, tip}. Koordinate su fiksne (ne dolaze iz latest.json). */
 const STATION_META = {
   "02BAR010": {lat:42.10563, lng:19.08956, tip:"glavna"},
   "02BERA20": {lat:42.84595, lng:19.88068, tip:"glavna"},
@@ -373,18 +381,40 @@ const METRIC_TYPES  = { T: 'line', RR: 'bar', vjetar: 'line', insolacija: 'line'
 
 function windDeg(smjerKod){
   const n = parseFloat(smjerKod);
-  if (isNaN(n)) return null;
-  return Math.round(n * 11.25);
+  return isNaN(n) ? null : Math.round(n * 11.25);
 }
-
 function fmtNum(v, unit){
   if (v === undefined || v === null || v === "") return "—";
   return v + (unit || "");
 }
-
 function hasAnyReading(s){
   return ["T","RR","vjetar","udar"].some(k => s[k] !== undefined && s[k] !== null && s[k] !== "");
 }
+
+/* ---------- Bottom nav / tabs ---------- */
+function switchView(view){
+  document.getElementById('view-pregled').classList.toggle('hidden', view !== 'pregled');
+  document.getElementById('view-mapa').classList.toggle('hidden', view !== 'mapa');
+  document.getElementById('nav-pregled').classList.toggle('active', view === 'pregled');
+  document.getElementById('nav-mapa').classList.toggle('active', view === 'mapa');
+  if (view === 'mapa'){
+    if (!map){ initMap(); renderMarkers(); }
+    setTimeout(() => map.invalidateSize(), 60);
+  }
+}
+document.getElementById('nav-pregled').addEventListener('click', () => switchView('pregled'));
+document.getElementById('nav-mapa').addEventListener('click', () => switchView('mapa'));
+
+/* ---------- Info panel ---------- */
+document.getElementById('info-btn').addEventListener('click', () => {
+  document.getElementById('info-overlay').style.display = 'block';
+  document.getElementById('info-panel').classList.add('open');
+});
+function closeInfo(){
+  document.getElementById('info-overlay').style.display = 'none';
+  document.getElementById('info-panel').classList.remove('open');
+}
+document.getElementById('info-overlay').addEventListener('click', closeInfo);
 
 /* ---------- Map ---------- */
 function initMap(){
@@ -393,7 +423,6 @@ function initMap(){
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
 }
-
 function renderMarkers(){
   Object.entries(STATION_META).forEach(([sifra, meta]) => {
     if (markers[sifra]) return;
@@ -401,34 +430,18 @@ function renderMarkers(){
     const icon = L.divIcon({
       className: '',
       html: `<div style="width:12px;height:12px;border-radius:50%;background:${color};border:2px solid #10151c;box-shadow:0 0 0 1px ${color};"></div>`,
-      iconSize: [12,12],
-      iconAnchor: [6,6],
+      iconSize: [12,12], iconAnchor: [6,6],
     });
     const m = L.marker([meta.lat, meta.lng], {icon}).addTo(map);
-    m.on('click', () => openSheet(sifra));
+    m.on('click', () => openDetail(sifra));
     markers[sifra] = m;
   });
 }
 
-document.getElementById('map-toggle').addEventListener('click', () => {
-  const toggle = document.getElementById('map-toggle');
-  const wrap = document.getElementById('map-wrap');
-  const isOpen = toggle.classList.toggle('open');
-  if (isOpen){
-    wrap.style.height = '380px';
-    if (!map){ initMap(); renderMarkers(); }
-    setTimeout(() => map.invalidateSize(), 260);
-  } else {
-    wrap.style.height = '0';
-  }
-});
+/* ---------- Detail view ---------- */
+function findStation(sifra){ return allStations.find(s => s.sifra === sifra); }
 
-/* ---------- Bottom sheet ---------- */
-function findStation(sifra){
-  return allStations.find(s => s.sifra === sifra);
-}
-
-async function openSheet(sifra){
+async function openDetail(sifra){
   const s = findStation(sifra);
   if (!s) return;
   currentSifra = sifra;
@@ -436,10 +449,10 @@ async function openSheet(sifra){
   document.querySelectorAll('.metric-tab').forEach(t => t.classList.toggle('active', t.dataset.metric === 'T'));
 
   const parts = (s.datum_vrijeme || '').split(' ');
-  document.getElementById('sheet-name').textContent = s.stanica;
-  document.getElementById('sheet-time').textContent = (parts[0]||'') + (parts[1] ? '  ·  ' + parts[1] : '');
+  document.getElementById('detail-name').textContent = s.stanica;
+  document.getElementById('detail-time').textContent = (parts[0]||'') + (parts[1] ? '  ·  ' + parts[1] : '');
 
-  const note = document.getElementById('sheet-note');
+  const note = document.getElementById('detail-note');
   if (!hasAnyReading(s)){
     note.hidden = false;
     note.textContent = 'Podaci za ovu stanicu trenutno nedostaju kod izvora (ZHMS).';
@@ -447,32 +460,27 @@ async function openSheet(sifra){
     note.hidden = true;
   }
 
-  document.getElementById('sheet-t').textContent = (s.T !== "" && s.T !== undefined) ? Math.round(parseFloat(s.T)) + '°C' : '—';
-  const rrEl = document.getElementById('sheet-rr');
+  document.getElementById('detail-t').textContent = (s.T !== "" && s.T !== undefined) ? Math.round(parseFloat(s.T)) + '°C' : '—';
+  const rrEl = document.getElementById('detail-rr');
   rrEl.textContent = fmtNum(s.RR, ' mm');
-  rrEl.className = 'sheet-stat-val' + (s.RR === "" || s.RR === undefined ? ' dim' : '');
-  const windEl = document.getElementById('sheet-wind');
+  rrEl.className = 'detail-stat-val' + (s.RR === "" || s.RR === undefined ? ' dim' : '');
+  const windEl = document.getElementById('detail-wind');
   windEl.textContent = fmtNum(s.vjetar, ' m/s');
-  windEl.className = 'sheet-stat-val' + (s.vjetar === "" || s.vjetar === undefined ? ' dim' : '');
-  const gustEl = document.getElementById('sheet-gust');
+  windEl.className = 'detail-stat-val' + (s.vjetar === "" || s.vjetar === undefined ? ' dim' : '');
+  const gustEl = document.getElementById('detail-gust');
   gustEl.textContent = fmtNum(s.udar, ' m/s');
-  gustEl.className = 'sheet-stat-val' + (s.udar === "" || s.udar === undefined ? ' dim' : '');
+  gustEl.className = 'detail-stat-val' + (s.udar === "" || s.udar === undefined ? ' dim' : '');
 
   updateStarButton();
-
-  document.getElementById('overlay').style.display = 'block';
-  document.getElementById('sheet').classList.add('open');
+  document.getElementById('detail-view').classList.add('open');
 
   await loadStationPoints(sifra);
   renderChart();
 }
-
-function closeSheet(){
-  document.getElementById('overlay').style.display = 'none';
-  document.getElementById('sheet').classList.remove('open');
+function closeDetail(){
+  document.getElementById('detail-view').classList.remove('open');
 }
-document.getElementById('sheet-close').addEventListener('click', closeSheet);
-document.getElementById('overlay').addEventListener('click', closeSheet);
+document.getElementById('detail-back').addEventListener('click', closeDetail);
 
 document.querySelectorAll('.metric-tab').forEach(tab => {
   tab.addEventListener('click', () => {
@@ -487,15 +495,12 @@ async function loadStationPoints(sifra){
   try{
     const res = await fetch(`data/history/${sifra}.json?_=` + Date.now());
     stationPoints = res.ok ? await res.json() : [];
-  } catch(e){
-    stationPoints = [];
-  }
+  } catch(e){ stationPoints = []; }
 }
 
 function renderChart(){
-  const canvas = document.getElementById('sheet-chart');
-  const emptyMsg = document.getElementById('sheet-chart-empty');
-
+  const canvas = document.getElementById('detail-chart');
+  const emptyMsg = document.getElementById('detail-chart-empty');
   const valid = stationPoints.filter(p => p[currentMetric] !== null && p[currentMetric] !== undefined);
 
   if (chart){ chart.destroy(); chart = null; }
@@ -508,7 +513,6 @@ function renderChart(){
       : `Nema dovoljno podataka o ${METRIC_LABELS[currentMetric]} za ovu stanicu.`;
     return;
   }
-
   canvas.hidden = false;
   emptyMsg.hidden = true;
 
@@ -518,29 +522,18 @@ function renderChart(){
 
   chart = new Chart(canvas.getContext('2d'), {
     type: METRIC_TYPES[currentMetric],
-    data: {
-      labels,
-      datasets: [{
-        data: values,
-        borderColor: color,
-        backgroundColor: METRIC_TYPES[currentMetric] === 'bar' ? color : color + '20',
-        borderWidth: 2,
-        pointRadius: 0,
-        tension: 0.3,
-        fill: METRIC_TYPES[currentMetric] === 'line',
-        spanGaps: true,
-      }]
-    },
+    data: { labels, datasets: [{
+      data: values, borderColor: color,
+      backgroundColor: METRIC_TYPES[currentMetric] === 'bar' ? color : color + '20',
+      borderWidth: 2, pointRadius: 0, tension: 0.3,
+      fill: METRIC_TYPES[currentMetric] === 'line', spanGaps: true,
+    }]},
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
+      responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false } },
       scales: {
         x: { ticks: { color: '#5e6b7a', maxTicksLimit: 5, font: {size: 10} }, grid: { color: '#2a3441' } },
-        y: {
-          ticks: { color: '#5e6b7a', font: {size: 10}, callback: v => v + ' ' + METRIC_UNITS[currentMetric] },
-          grid: { color: '#2a3441' },
-        },
+        y: { ticks: { color: '#5e6b7a', font: {size: 10}, callback: v => v + ' ' + METRIC_UNITS[currentMetric] }, grid: { color: '#2a3441' } },
       }
     }
   });
@@ -554,7 +547,6 @@ function updateStarButton(){
   btn.textContent = isFeatured ? '★ Ovo je istaknuta stanica' : '☆ Postavi kao istaknuto';
   btn.disabled = isFeatured;
 }
-
 document.getElementById('star-btn').addEventListener('click', () => {
   const s = findStation(currentSifra);
   if (!s || s.stanica === FEATURED) return;
@@ -563,13 +555,12 @@ document.getElementById('star-btn').addEventListener('click', () => {
   FEATURED = s.stanica;
   localStorage.setItem('featuredStation', FEATURED);
   updateStarButton();
-  const featured = allStations.find(x => x.stanica === FEATURED);
-  renderHero(featured);
+  renderHero(allStations.find(x => x.stanica === FEATURED));
   applyFilter();
-  closeSheet();
+  closeDetail();
 });
 
-/* ---------- Lists ---------- */
+/* ---------- Pregled: hero + list ---------- */
 function renderHero(s){
   const hero = document.getElementById('hero');
   if (!s){ hero.hidden = true; return; }
@@ -581,50 +572,38 @@ function renderHero(s){
   document.getElementById('hero-rr').textContent = fmtNum(s.RR, ' mm');
   document.getElementById('hero-wind').textContent = fmtNum(s.vjetar, ' m/s');
   document.getElementById('hero-gust').textContent = fmtNum(s.udar, ' m/s');
-  hero.onclick = () => s.sifra && openSheet(s.sifra);
+  hero.onclick = () => s.sifra && openDetail(s.sifra);
 }
 
 function renderList(stations){
   const list = document.getElementById('list');
   const empty = document.getElementById('empty');
   list.innerHTML = '';
-
-  if (stations.length === 0){
-    empty.style.display = 'block';
-    return;
-  }
+  if (stations.length === 0){ empty.style.display = 'block'; return; }
   empty.style.display = 'none';
 
-  stations
-    .slice()
-    .sort((a,b) => a.stanica.localeCompare(b.stanica, 'sr'))
-    .forEach(s => {
-      const parts = (s.datum_vrijeme || '').split(' ');
-      const termin = parts[1] || '';
-      const deg = windDeg(s.smjer_kod);
-
-      const row = document.createElement('div');
-      row.className = 'row';
-
-      const tempVal = (s.T !== "" && s.T !== undefined) ? Math.round(parseFloat(s.T)) + '°' : '—';
-      const windSub = (s.vjetar !== "" && s.vjetar !== undefined)
-        ? `<span class="wind-arrow" style="--deg:${deg !== null ? deg : 0}deg"></span>${s.vjetar} m/s`
-        : '';
-      const rrSub = (s.RR !== "" && s.RR !== undefined) ? `${s.RR} mm` : '';
-
-      row.innerHTML = `
-        <div class="row-left">
-          <div class="row-name">${s.stanica}</div>
-          <div class="row-time">${termin}</div>
-        </div>
-        <div class="row-right">
-          <div class="row-temp">${tempVal}</div>
-          <div class="row-sub">${[rrSub, windSub].filter(Boolean).join(' &nbsp;·&nbsp; ') || 'nema podataka'}</div>
-        </div>
-      `;
-      row.addEventListener('click', () => s.sifra && openSheet(s.sifra));
-      list.appendChild(row);
-    });
+  stations.slice().sort((a,b) => a.stanica.localeCompare(b.stanica, 'sr')).forEach(s => {
+    const parts = (s.datum_vrijeme || '').split(' ');
+    const termin = parts[1] || '';
+    const deg = windDeg(s.smjer_kod);
+    const row = document.createElement('div');
+    row.className = 'row';
+    const tempVal = (s.T !== "" && s.T !== undefined) ? Math.round(parseFloat(s.T)) + '°' : '—';
+    const windSub = (s.vjetar !== "" && s.vjetar !== undefined)
+      ? `<span class="wind-arrow" style="--deg:${deg !== null ? deg : 0}deg"></span>${s.vjetar} m/s` : '';
+    const rrSub = (s.RR !== "" && s.RR !== undefined) ? `${s.RR} mm` : '';
+    row.innerHTML = `
+      <div class="row-left">
+        <div class="row-name">${s.stanica}</div>
+        <div class="row-time">${termin}</div>
+      </div>
+      <div class="row-right">
+        <div class="row-temp">${tempVal}</div>
+        <div class="row-sub">${[rrSub, windSub].filter(Boolean).join(' &nbsp;·&nbsp; ') || 'nema podataka'}</div>
+      </div>`;
+    row.addEventListener('click', () => s.sifra && openDetail(s.sifra));
+    list.appendChild(row);
+  });
 }
 
 function applyFilter(){
@@ -639,15 +618,9 @@ async function load(){
     const res = await fetch('data/latest.json?_=' + Date.now());
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
-
     document.getElementById('err').style.display = 'none';
-    const updatedDate = new Date(data.updated_at);
-    document.getElementById('updated').textContent =
-      'Ažurirano ' + updatedDate.toLocaleTimeString('sr-Latn-ME', {hour:'2-digit', minute:'2-digit'});
-
     allStations = data.stations || [];
-    const featured = allStations.find(s => s.stanica === FEATURED);
-    renderHero(featured);
+    renderHero(allStations.find(s => s.stanica === FEATURED));
     applyFilter();
   } catch(e){
     const err = document.getElementById('err');
