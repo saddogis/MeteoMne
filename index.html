@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <style>
   :root{
     --bg: #10151c;
@@ -95,6 +98,21 @@
   .hero-stat-label{ font-size:0.66rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted-2); margin-bottom:0.2rem; }
   .hero-stat-val{ font-size:0.98rem; color:var(--muted); display:flex; align-items:center; gap:0.3rem; }
 
+  /* ---- Map ---- */
+  .map-toggle{
+    display:flex; align-items:center; justify-content:space-between;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 0.8rem 1rem; margin-bottom: 0.9rem; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .map-toggle svg{ transition: transform 0.2s ease; opacity: 0.6; }
+  .map-toggle.open svg{ transform: rotate(180deg); }
+  #map-wrap{
+    height: 0; overflow: hidden; border-radius: 14px; margin-bottom: 0.9rem;
+    transition: height 0.25s ease; border: 1px solid var(--line);
+  }
+  #map{ height: 380px; width: 100%; }
+
   /* ---- Search ---- */
   .search-wrap{ position: relative; margin-bottom: 0.9rem; }
   .search-wrap svg{ position:absolute; left:0.85rem; top:50%; transform:translateY(-50%); opacity:0.45; }
@@ -124,8 +142,10 @@
     display:flex; align-items:center; justify-content:space-between;
     padding: 0.75rem 1rem;
     border-bottom: 1px solid var(--line);
+    cursor: pointer;
   }
   .row:last-child{ border-bottom:none; }
+  .row:active{ background: var(--surface-2); }
   .row-left{ min-width:0; }
   .row-name{ font-size: 0.94rem; font-weight: 600; color: var(--text); }
   .row-time{ font-size: 0.74rem; color: var(--muted-2); margin-top:0.1rem; }
@@ -144,6 +164,36 @@
   #empty{ display:none; text-align:center; color: var(--muted-2); font-size:0.85rem; padding: 2rem 1rem; }
   #err{ text-align:center; color:#e0777a; font-size:0.85rem; padding: 1rem; display:none; }
   footer{ text-align:center; color: var(--muted-2); font-size: 0.7rem; margin-top: 1.5rem; }
+
+  /* ---- Station modal (bottom sheet) ---- */
+  #overlay{
+    position: fixed; inset:0; background: rgba(8,11,15,0.6);
+    display:none; z-index: 40;
+  }
+  #sheet{
+    position: fixed; left:0; right:0; bottom:0; z-index: 41;
+    background: var(--surface-2); border-top: 1px solid var(--line);
+    border-radius: 18px 18px 0 0;
+    padding: 1.1rem 1.1rem 1.5rem;
+    transform: translateY(100%);
+    transition: transform 0.25s ease;
+    max-width: 640px; margin: 0 auto;
+    max-height: 80vh; overflow-y: auto;
+  }
+  #sheet.open{ transform: translateY(0); }
+  .sheet-handle{ width:36px; height:4px; background: var(--line); border-radius:2px; margin: 0 auto 0.9rem; }
+  .sheet-close{
+    position:absolute; top:1rem; right:1rem; background:none; border:none;
+    color: var(--muted); font-size:1.3rem; line-height:1; cursor:pointer; padding:0.2rem;
+  }
+  .sheet-name{ font-size: 1.15rem; font-weight:700; }
+  .sheet-time{ font-size: 0.78rem; color: var(--muted); margin-top:0.15rem; margin-bottom: 0.9rem; }
+  .sheet-stats{ display:flex; gap:1.3rem; margin-bottom: 1.1rem; flex-wrap: wrap; }
+  .sheet-stat-label{ font-size:0.66rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted-2); margin-bottom:0.2rem; }
+  .sheet-stat-val{ font-size:1.1rem; font-weight:600; }
+  .sheet-stat-val.heat{ color: var(--heat); }
+  .chart-wrap{ margin-top: 0.4rem; height: 180px; position: relative; }
+  .chart-empty{ font-size:0.8rem; color: var(--muted-2); text-align:center; padding: 2.2rem 0; }
 </style>
 </head>
 <body>
@@ -181,6 +231,12 @@
     </div>
   </div>
 
+  <div class="map-toggle" id="map-toggle">
+    <span>Mapa stanica</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+  <div id="map-wrap"><div id="map"></div></div>
+
   <div class="search-wrap">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     <input type="text" id="filter" placeholder="Pretraži stanicu...">
@@ -194,9 +250,83 @@
   <footer>Izvor: Zavod za hidrometeorologiju i seizmologiju Crne Gore</footer>
 </main>
 
+<div id="overlay"></div>
+<div id="sheet">
+  <button class="sheet-close" id="sheet-close" aria-label="Zatvori">&times;</button>
+  <div class="sheet-handle"></div>
+  <div class="sheet-name" id="sheet-name">—</div>
+  <div class="sheet-time" id="sheet-time">—</div>
+  <div class="sheet-stats">
+    <div>
+      <div class="sheet-stat-label">Temperatura</div>
+      <div class="sheet-stat-val heat" id="sheet-t">—</div>
+    </div>
+    <div>
+      <div class="sheet-stat-label">Padavine</div>
+      <div class="sheet-stat-val" id="sheet-rr">—</div>
+    </div>
+    <div>
+      <div class="sheet-stat-label">Vjetar</div>
+      <div class="sheet-stat-val" id="sheet-wind">—</div>
+    </div>
+    <div>
+      <div class="sheet-stat-label">Udar</div>
+      <div class="sheet-stat-val" id="sheet-gust">—</div>
+    </div>
+  </div>
+  <div class="chart-wrap">
+    <canvas id="sheet-chart"></canvas>
+    <div class="chart-empty" id="sheet-chart-empty" hidden>Istorija temperature se prikuplja — vrati se za koji sat.</div>
+  </div>
+</div>
+
 <script>
 const FEATURED = "Pljevlja";
 let allStations = [];
+let map, chart;
+const markers = {};
+
+/* Statička lista stanica: šifra -> {ime, lat, lng, tip}. Koordinate ne dolaze iz latest.json (koji nosi samo trenutna očitavanja), pa su ovde fiksne. */
+const STATION_META = {
+  "02BAR010": {lat:42.10563, lng:19.08956, tip:"glavna"},
+  "02BERA20": {lat:42.84595, lng:19.88068, tip:"glavna"},
+  "02BIST20": {lat:42.99750, lng:19.43747, tip:"klimatoloska"},
+  "02BOAN30": {lat:42.94199, lng:19.21188, tip:"klimatoloska"},
+  "02BPLJ20": {lat:43.03469, lng:19.74210, tip:"klimatoloska"},
+  "02BUDV20": {lat:42.29074, lng:18.83844, tip:"klimatoloska"},
+  "02CRKV30": {lat:42.57185, lng:18.63461, tip:"klimatoloska"},
+  "02CTNJ10": {lat:42.38416, lng:18.92517, tip:"glavna"},
+  "02DANL20": {lat:42.55046, lng:19.10792, tip:"klimatoloska"},
+  "02DDOB30": {lat:43.02478, lng:19.39594, tip:"klimatoloska"},
+  "02DPLJ20": {lat:42.86634, lng:19.31355, tip:"klimatoloska"},
+  "02GOBU30": {lat:43.03870, lng:19.13738, tip:"klimatoloska"},
+  "02GRAD30": {lat:43.39585, lng:19.15309, tip:"klimatoloska"},
+  "02HNOV10": {lat:42.45971, lng:18.50927, tip:"glavna"},
+  "02IVKO30": {lat:42.38019, lng:18.83582, tip:"klimatoloska"},
+  "02KOLS10": {lat:42.82617, lng:19.51590, tip:"glavna"},
+  "02KOSA30": {lat:43.19688, lng:19.32025, tip:"klimatoloska"},
+  "02KOVR30": {lat:43.18931, lng:19.57089, tip:"klimatoloska"},
+  "02KUKO30": {lat:42.48223, lng:19.51328, tip:"klimatoloska"},
+  "02LKOT20": {lat:42.42623, lng:18.76643, tip:"klimatoloska"},
+  "02MAMO30": {lat:42.76685, lng:19.39146, tip:"klimatoloska"},
+  "02MATE30": {lat:42.76062, lng:19.55587, tip:"klimatoloska"},
+  "02MOKR30": {lat:42.93804, lng:19.07239, tip:"klimatoloska"},
+  "02NIKS10": {lat:42.76681, lng:18.95288, tip:"glavna"},
+  "02NJGV30": {lat:43.12206, lng:19.22277, tip:"klimatoloska"},
+  "02PDGR10": {lat:42.43648, lng:19.27199, tip:"glavna"},
+  "02PLJV10": {lat:43.35028, lng:19.35750, tip:"glavna"},
+  "02PLZN20": {lat:43.15748, lng:18.84515, tip:"klimatoloska"},
+  "02POSC30": {lat:42.97496, lng:19.07436, tip:"klimatoloska"},
+  "02SCPO30": {lat:43.34763, lng:18.84454, tip:"klimatoloska"},
+  "02STAB30": {lat:43.16354, lng:18.75450, tip:"klimatoloska"},
+  "02STIT30": {lat:42.91682, lng:19.52225, tip:"klimatoloska"},
+  "02UBLI20": {lat:42.49480, lng:19.38612, tip:"klimatoloska"},
+  "02ULCN10": {lat:41.91660, lng:19.25293, tip:"glavna"},
+  "02VELK30": {lat:42.66445, lng:19.95465, tip:"klimatoloska"},
+  "02VELM20": {lat:42.82194, lng:18.63389, tip:"klimatoloska"},
+  "02VIRP20": {lat:42.23941, lng:19.08301, tip:"klimatoloska"},
+  "02ZBLJ10": {lat:43.15576, lng:19.12174, tip:"glavna"},
+};
 
 function windDeg(smjerKod){
   const n = parseFloat(smjerKod);
@@ -209,6 +339,123 @@ function fmtNum(v, unit){
   return v + (unit || "");
 }
 
+/* ---------- Map ---------- */
+function initMap(){
+  map = L.map('map', { zoomControl: true }).setView([42.75, 19.28], 8);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+}
+
+function renderMarkers(){
+  Object.entries(STATION_META).forEach(([sifra, meta]) => {
+    if (markers[sifra]) return;
+    const color = meta.tip === 'glavna' ? '#f2a541' : '#4fb6c9';
+    const icon = L.divIcon({
+      className: '',
+      html: `<div style="width:12px;height:12px;border-radius:50%;background:${color};border:2px solid #10151c;box-shadow:0 0 0 1px ${color};"></div>`,
+      iconSize: [12,12],
+      iconAnchor: [6,6],
+    });
+    const m = L.marker([meta.lat, meta.lng], {icon}).addTo(map);
+    m.on('click', () => openSheet(sifra));
+    markers[sifra] = m;
+  });
+}
+
+document.getElementById('map-toggle').addEventListener('click', () => {
+  const toggle = document.getElementById('map-toggle');
+  const wrap = document.getElementById('map-wrap');
+  const isOpen = toggle.classList.toggle('open');
+  if (isOpen){
+    wrap.style.height = '380px';
+    if (!map){ initMap(); renderMarkers(); }
+    setTimeout(() => map.invalidateSize(), 260);
+  } else {
+    wrap.style.height = '0';
+  }
+});
+
+/* ---------- Bottom sheet ---------- */
+function findStation(sifra){
+  return allStations.find(s => s.sifra === sifra);
+}
+
+async function openSheet(sifra){
+  const s = findStation(sifra);
+  if (!s) return;
+
+  const parts = (s.datum_vrijeme || '').split(' ');
+  document.getElementById('sheet-name').textContent = s.stanica;
+  document.getElementById('sheet-time').textContent = (parts[0]||'') + (parts[1] ? '  ·  ' + parts[1] : '');
+  document.getElementById('sheet-t').textContent = (s.T !== "" && s.T !== undefined) ? Math.round(parseFloat(s.T)) + '°C' : '—';
+  document.getElementById('sheet-rr').textContent = fmtNum(s.RR, ' mm');
+  document.getElementById('sheet-wind').textContent = fmtNum(s.vjetar, ' m/s');
+  document.getElementById('sheet-gust').textContent = fmtNum(s.udar, ' m/s');
+
+  document.getElementById('overlay').style.display = 'block';
+  document.getElementById('sheet').classList.add('open');
+
+  await loadStationChart(sifra);
+}
+
+function closeSheet(){
+  document.getElementById('overlay').style.display = 'none';
+  document.getElementById('sheet').classList.remove('open');
+}
+document.getElementById('sheet-close').addEventListener('click', closeSheet);
+document.getElementById('overlay').addEventListener('click', closeSheet);
+
+async function loadStationChart(sifra){
+  const canvas = document.getElementById('sheet-chart');
+  const emptyMsg = document.getElementById('sheet-chart-empty');
+  emptyMsg.hidden = true;
+  canvas.hidden = false;
+
+  let points = [];
+  try{
+    const res = await fetch(`data/history/${sifra}.json?_=` + Date.now());
+    if (res.ok) points = await res.json();
+  } catch(e){ points = []; }
+
+  if (chart){ chart.destroy(); chart = null; }
+
+  if (!points || points.length < 2){
+    canvas.hidden = true;
+    emptyMsg.hidden = false;
+    return;
+  }
+
+  const labels = points.map(p => (p.dt || '').split(' ')[1] || '');
+  const temps = points.map(p => p.T);
+
+  chart = new Chart(canvas.getContext('2d'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        data: temps,
+        borderColor: '#f2a541',
+        backgroundColor: 'rgba(242,165,65,0.12)',
+        borderWidth: 2,
+        pointRadius: 0,
+        tension: 0.3,
+        fill: true,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#5e6b7a', maxTicksLimit: 5, font: {size: 10} }, grid: { color: '#2a3441' } },
+        y: { ticks: { color: '#5e6b7a', font: {size: 10} }, grid: { color: '#2a3441' } },
+      }
+    }
+  });
+}
+
+/* ---------- Lists ---------- */
 function renderHero(s){
   const hero = document.getElementById('hero');
   if (!s){ hero.hidden = true; return; }
@@ -220,6 +467,8 @@ function renderHero(s){
   document.getElementById('hero-rr').textContent = fmtNum(s.RR, ' mm');
   document.getElementById('hero-wind').textContent = fmtNum(s.vjetar, ' m/s');
   document.getElementById('hero-gust').textContent = fmtNum(s.udar, ' m/s');
+  hero.onclick = () => s.sifra && openSheet(s.sifra);
+  hero.style.cursor = s.sifra ? 'pointer' : 'default';
 }
 
 function renderList(stations){
@@ -260,6 +509,7 @@ function renderList(stations){
           <div class="row-sub">${[rrSub, windSub].filter(Boolean).join(' &nbsp;·&nbsp; ')}</div>
         </div>
       `;
+      row.addEventListener('click', () => s.sifra && openSheet(s.sifra));
       list.appendChild(row);
     });
 }
