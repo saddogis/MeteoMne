@@ -12,6 +12,8 @@ URL = "https://www.meteo.co.me/Meteorologija/aws_m.php"
 DATA_DIR = "data"
 HISTORY_CSV = os.path.join(DATA_DIR, "history.csv")
 LATEST_JSON = os.path.join(DATA_DIR, "latest.json")
+STATION_HISTORY_DIR = os.path.join(DATA_DIR, "history")
+MAX_POINTS_PER_STATION = 96  # ~24h ako se skuplja na svakih ~15 min
 
 FIELDNAMES = ["sifra", "tip", "stanica", "datum_vrijeme", "T", "RR", "vjetar", "smjer_kod", "udar"]
 
@@ -27,7 +29,6 @@ def extract_posljednje(html):
     if not m:
         raise ValueError("Nisam pronašao 'posljednje' varijablu na stranici — struktura sajta se možda promijenila.")
     raw = m.group(1)
-    # ukloni "trailing" zapete prije zatvaranja niza/objekta, jer to nije validan JSON
     raw = re.sub(r",\s*\]", "]", raw)
     raw = re.sub(r",\s*\}", "}", raw)
     return json.loads(raw)
@@ -76,6 +77,31 @@ def append_new(rows, existing_keys):
     return new_rows
 
 
+def export_station_history():
+    """Pravi mali JSON fajl po stanici sa poslednjih N tačaka temperature, za grafikon."""
+    if not os.path.exists(HISTORY_CSV):
+        return
+    by_station = {}
+    with open(HISTORY_CSV, newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            by_station.setdefault(row["sifra"], []).append(row)
+
+    os.makedirs(STATION_HISTORY_DIR, exist_ok=True)
+    for sifra, rows in by_station.items():
+        trimmed = rows[-MAX_POINTS_PER_STATION:]
+        points = []
+        for r in trimmed:
+            try:
+                t_val = float(r["T"])
+            except (ValueError, TypeError):
+                continue
+            points.append({"dt": r["datum_vrijeme"], "T": t_val})
+        safe_name = re.sub(r"[^A-Za-z0-9_-]", "_", sifra)
+        with open(os.path.join(STATION_HISTORY_DIR, f"{safe_name}.json"), "w", encoding="utf-8") as out:
+            json.dump(points, out, ensure_ascii=False)
+
+
 def main():
     html = fetch_raw()
     data = extract_posljednje(html)
@@ -83,6 +109,7 @@ def main():
 
     existing = load_existing_keys()
     new_rows = append_new(rows, existing)
+    export_station_history()
 
     os.makedirs(DATA_DIR, exist_ok=True)
     with open(LATEST_JSON, "w", encoding="utf-8") as f:
