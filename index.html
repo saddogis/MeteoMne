@@ -34,7 +34,7 @@
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     padding-top: var(--header-h);
-    padding-bottom: var(--nav-h);
+    padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px) + 28px);
   }
   button{ font-family: inherit; }
 
@@ -249,7 +249,7 @@
 
   <div class="search-wrap">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="text" id="filter" placeholder="Pretraži stanicu...">
+    <input type="text" id="filter" placeholder="Pretraži stanicu..." enterkeyhint="search" inputmode="search">
   </div>
 
   <div class="section-label">Ostale stanice</div>
@@ -473,14 +473,24 @@ async function openDetail(sifra){
 
   updateStarButton();
   document.getElementById('detail-view').classList.add('open');
+  if (!(history.state && history.state.detail)){
+    history.pushState({ detail: sifra }, '', '#' + sifra);
+  }
 
   await loadStationPoints(sifra);
   renderChart();
 }
-function closeDetail(){
+function closeDetailUI(){
   document.getElementById('detail-view').classList.remove('open');
 }
-document.getElementById('detail-back').addEventListener('click', closeDetail);
+document.getElementById('detail-back').addEventListener('click', () => {
+  if (history.state && history.state.detail){ history.back(); }
+  else { closeDetailUI(); }
+});
+window.addEventListener('popstate', (e) => {
+  const state = e.state;
+  if (!state || !state.detail){ closeDetailUI(); }
+});
 
 document.querySelectorAll('.metric-tab').forEach(tab => {
   tab.addEventListener('click', () => {
@@ -557,7 +567,7 @@ document.getElementById('star-btn').addEventListener('click', () => {
   updateStarButton();
   renderHero(allStations.find(x => x.stanica === FEATURED));
   applyFilter();
-  closeDetail();
+  if (history.state && history.state.detail){ history.back(); } else { closeDetailUI(); }
 });
 
 /* ---------- Pregled: hero + list ---------- */
@@ -630,6 +640,9 @@ async function load(){
 }
 
 document.getElementById('filter').addEventListener('input', applyFilter);
+document.getElementById('filter').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter'){ e.preventDefault(); document.getElementById('filter').blur(); }
+});
 
 load();
 setInterval(load, 5 * 60 * 1000);
