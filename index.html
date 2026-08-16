@@ -66,7 +66,7 @@
 
   main{ max-width: 640px; margin: 0 auto; padding: 1rem; }
 
-  /* ---- Hero (Pljevlja) ---- */
+  /* ---- Hero ---- */
   .hero{
     position: relative;
     background: linear-gradient(160deg, var(--surface-2) 0%, var(--surface) 65%);
@@ -75,6 +75,7 @@
     padding: 1.25rem 1.25rem 1.1rem;
     margin-bottom: 1.1rem;
     overflow: hidden;
+    cursor: pointer;
   }
   .hero::before{
     content:"";
@@ -163,7 +164,7 @@
 
   #empty{ display:none; text-align:center; color: var(--muted-2); font-size:0.85rem; padding: 2rem 1rem; }
   #err{ text-align:center; color:#e0777a; font-size:0.85rem; padding: 1rem; display:none; }
-  footer{ text-align:center; color: var(--muted-2); font-size: 0.7rem; margin-top: 1.5rem; }
+  footer{ text-align:center; color: var(--muted-2); font-size: 0.7rem; margin-top: 1.5rem; line-height:1.6; }
 
   /* ---- Station modal (bottom sheet) ---- */
   #overlay{
@@ -178,7 +179,7 @@
     transform: translateY(100%);
     transition: transform 0.25s ease;
     max-width: 640px; margin: 0 auto;
-    max-height: 80vh; overflow-y: auto;
+    max-height: 85vh; overflow-y: auto;
   }
   #sheet.open{ transform: translateY(0); }
   .sheet-handle{ width:36px; height:4px; background: var(--line); border-radius:2px; margin: 0 auto 0.9rem; }
@@ -187,13 +188,31 @@
     color: var(--muted); font-size:1.3rem; line-height:1; cursor:pointer; padding:0.2rem;
   }
   .sheet-name{ font-size: 1.15rem; font-weight:700; }
-  .sheet-time{ font-size: 0.78rem; color: var(--muted); margin-top:0.15rem; margin-bottom: 0.9rem; }
-  .sheet-stats{ display:flex; gap:1.3rem; margin-bottom: 1.1rem; flex-wrap: wrap; }
+  .sheet-time{ font-size: 0.78rem; color: var(--muted); margin-top:0.15rem; }
+  .sheet-note{ font-size: 0.74rem; color: var(--muted-2); margin-top:0.3rem; font-style: italic; }
+  .sheet-stats{ display:flex; gap:1.3rem; margin: 0.9rem 0 1.1rem; flex-wrap: wrap; }
   .sheet-stat-label{ font-size:0.66rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted-2); margin-bottom:0.2rem; }
   .sheet-stat-val{ font-size:1.1rem; font-weight:600; }
   .sheet-stat-val.heat{ color: var(--heat); }
-  .chart-wrap{ margin-top: 0.4rem; height: 180px; position: relative; }
-  .chart-empty{ font-size:0.8rem; color: var(--muted-2); text-align:center; padding: 2.2rem 0; }
+  .sheet-stat-val.dim{ color: var(--muted-2); font-weight: 500; font-size: 0.95rem; }
+
+  .metric-tabs{ display:flex; gap:0.4rem; margin-bottom:0.7rem; }
+  .metric-tab{
+    flex:1; text-align:center; padding: 0.5rem 0.4rem; border-radius: 10px;
+    background: var(--surface); border: 1px solid var(--line);
+    font-size: 0.78rem; font-weight: 600; color: var(--muted); cursor: pointer;
+  }
+  .metric-tab.active{ background: var(--heat-dim); color: var(--heat); border-color: var(--heat-dim); }
+
+  .chart-wrap{ margin-top: 0.4rem; height: 190px; position: relative; }
+  .chart-empty{ font-size:0.8rem; color: var(--muted-2); text-align:center; padding: 2.6rem 0; }
+
+  .star-btn{
+    display:block; width:100%; margin-top: 1rem; padding: 0.65rem;
+    background: none; border: 1px solid var(--line); border-radius: 10px;
+    color: var(--muted); font-size: 0.82rem; font-weight: 600; cursor:pointer;
+  }
+  .star-btn.is-featured{ color: var(--heat); border-color: var(--heat-dim); }
 </style>
 </head>
 <body>
@@ -210,7 +229,7 @@
     <div class="hero-top">
       <div>
         <div class="hero-label">Izdvojeno</div>
-        <div class="hero-name" id="hero-name">Pljevlja</div>
+        <div class="hero-name" id="hero-name">—</div>
         <div class="hero-time" id="hero-time">—</div>
       </div>
       <div class="hero-temp"><span id="hero-t">—</span><sup>°C</sup></div>
@@ -247,7 +266,10 @@
   <div id="empty">Nema stanica koje odgovaraju pretrazi.</div>
   <div id="err"></div>
 
-  <footer>Izvor: Zavod za hidrometeorologiju i seizmologiju Crne Gore</footer>
+  <footer>
+    Izvor: Zavod za hidrometeorologiju i seizmologiju Crne Gore.<br>
+    Napomena: zvanični izvor povremeno ima praznine u podacima za pojedine stanice (kvar senzora, prekid u prenosu) — takvi podaci se ovdje prikazuju kao „—".
+  </footer>
 </main>
 
 <div id="overlay"></div>
@@ -256,6 +278,7 @@
   <div class="sheet-handle"></div>
   <div class="sheet-name" id="sheet-name">—</div>
   <div class="sheet-time" id="sheet-time">—</div>
+  <div class="sheet-note" id="sheet-note" hidden></div>
   <div class="sheet-stats">
     <div>
       <div class="sheet-stat-label">Temperatura</div>
@@ -274,19 +297,31 @@
       <div class="sheet-stat-val" id="sheet-gust">—</div>
     </div>
   </div>
+
+  <div class="metric-tabs">
+    <div class="metric-tab active" data-metric="T">Temperatura</div>
+    <div class="metric-tab" data-metric="RR">Padavine</div>
+    <div class="metric-tab" data-metric="vjetar">Vjetar</div>
+  </div>
+
   <div class="chart-wrap">
     <canvas id="sheet-chart"></canvas>
-    <div class="chart-empty" id="sheet-chart-empty" hidden>Istorija temperature se prikuplja — vrati se za koji sat.</div>
+    <div class="chart-empty" id="sheet-chart-empty" hidden></div>
   </div>
+
+  <button class="star-btn" id="star-btn">☆ Postavi kao istaknuto</button>
 </div>
 
 <script>
-const FEATURED = "Pljevlja";
+let FEATURED = localStorage.getItem('featuredStation') || "Pljevlja";
 let allStations = [];
+let stationPoints = [];
+let currentMetric = 'T';
+let currentSifra = null;
 let map, chart;
 const markers = {};
 
-/* Statička lista stanica: šifra -> {ime, lat, lng, tip}. Koordinate ne dolaze iz latest.json (koji nosi samo trenutna očitavanja), pa su ovde fiksne. */
+/* Statička lista stanica: šifra -> {lat, lng, tip}. Koordinate su fiksne (ne dolaze iz latest.json). */
 const STATION_META = {
   "02BAR010": {lat:42.10563, lng:19.08956, tip:"glavna"},
   "02BERA20": {lat:42.84595, lng:19.88068, tip:"glavna"},
@@ -328,6 +363,11 @@ const STATION_META = {
   "02ZBLJ10": {lat:43.15576, lng:19.12174, tip:"glavna"},
 };
 
+const METRIC_LABELS = { T: 'temperature', RR: 'padavina', vjetar: 'vjetra' };
+const METRIC_UNITS  = { T: '°C', RR: 'mm', vjetar: 'm/s' };
+const METRIC_COLORS = { T: '#f2a541', RR: '#4fb6c9', vjetar: '#8a97a6' };
+const METRIC_TYPES  = { T: 'line', RR: 'bar', vjetar: 'line' };
+
 function windDeg(smjerKod){
   const n = parseFloat(smjerKod);
   if (isNaN(n)) return null;
@@ -337,6 +377,10 @@ function windDeg(smjerKod){
 function fmtNum(v, unit){
   if (v === undefined || v === null || v === "") return "—";
   return v + (unit || "");
+}
+
+function hasAnyReading(s){
+  return ["T","RR","vjetar","udar"].some(k => s[k] !== undefined && s[k] !== null && s[k] !== "");
 }
 
 /* ---------- Map ---------- */
@@ -384,19 +428,40 @@ function findStation(sifra){
 async function openSheet(sifra){
   const s = findStation(sifra);
   if (!s) return;
+  currentSifra = sifra;
+  currentMetric = 'T';
+  document.querySelectorAll('.metric-tab').forEach(t => t.classList.toggle('active', t.dataset.metric === 'T'));
 
   const parts = (s.datum_vrijeme || '').split(' ');
   document.getElementById('sheet-name').textContent = s.stanica;
   document.getElementById('sheet-time').textContent = (parts[0]||'') + (parts[1] ? '  ·  ' + parts[1] : '');
+
+  const note = document.getElementById('sheet-note');
+  if (!hasAnyReading(s)){
+    note.hidden = false;
+    note.textContent = 'Podaci za ovu stanicu trenutno nedostaju kod izvora (ZHMS).';
+  } else {
+    note.hidden = true;
+  }
+
   document.getElementById('sheet-t').textContent = (s.T !== "" && s.T !== undefined) ? Math.round(parseFloat(s.T)) + '°C' : '—';
-  document.getElementById('sheet-rr').textContent = fmtNum(s.RR, ' mm');
-  document.getElementById('sheet-wind').textContent = fmtNum(s.vjetar, ' m/s');
-  document.getElementById('sheet-gust').textContent = fmtNum(s.udar, ' m/s');
+  const rrEl = document.getElementById('sheet-rr');
+  rrEl.textContent = fmtNum(s.RR, ' mm');
+  rrEl.className = 'sheet-stat-val' + (s.RR === "" || s.RR === undefined ? ' dim' : '');
+  const windEl = document.getElementById('sheet-wind');
+  windEl.textContent = fmtNum(s.vjetar, ' m/s');
+  windEl.className = 'sheet-stat-val' + (s.vjetar === "" || s.vjetar === undefined ? ' dim' : '');
+  const gustEl = document.getElementById('sheet-gust');
+  gustEl.textContent = fmtNum(s.udar, ' m/s');
+  gustEl.className = 'sheet-stat-val' + (s.udar === "" || s.udar === undefined ? ' dim' : '');
+
+  updateStarButton();
 
   document.getElementById('overlay').style.display = 'block';
   document.getElementById('sheet').classList.add('open');
 
-  await loadStationChart(sifra);
+  await loadStationPoints(sifra);
+  renderChart();
 }
 
 function closeSheet(){
@@ -406,41 +471,61 @@ function closeSheet(){
 document.getElementById('sheet-close').addEventListener('click', closeSheet);
 document.getElementById('overlay').addEventListener('click', closeSheet);
 
-async function loadStationChart(sifra){
-  const canvas = document.getElementById('sheet-chart');
-  const emptyMsg = document.getElementById('sheet-chart-empty');
-  emptyMsg.hidden = true;
-  canvas.hidden = false;
+document.querySelectorAll('.metric-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.metric-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentMetric = tab.dataset.metric;
+    renderChart();
+  });
+});
 
-  let points = [];
+async function loadStationPoints(sifra){
   try{
     const res = await fetch(`data/history/${sifra}.json?_=` + Date.now());
-    if (res.ok) points = await res.json();
-  } catch(e){ points = []; }
+    stationPoints = res.ok ? await res.json() : [];
+  } catch(e){
+    stationPoints = [];
+  }
+}
+
+function renderChart(){
+  const canvas = document.getElementById('sheet-chart');
+  const emptyMsg = document.getElementById('sheet-chart-empty');
+
+  const valid = stationPoints.filter(p => p[currentMetric] !== null && p[currentMetric] !== undefined);
 
   if (chart){ chart.destroy(); chart = null; }
 
-  if (!points || points.length < 2){
+  if (valid.length < 2){
     canvas.hidden = true;
     emptyMsg.hidden = false;
+    emptyMsg.textContent = stationPoints.length === 0
+      ? 'Istorija se prikuplja — vrati se za koji sat.'
+      : `Nema dovoljno podataka o ${METRIC_LABELS[currentMetric]} za ovu stanicu.`;
     return;
   }
 
-  const labels = points.map(p => (p.dt || '').split(' ')[1] || '');
-  const temps = points.map(p => p.T);
+  canvas.hidden = false;
+  emptyMsg.hidden = true;
+
+  const labels = stationPoints.map(p => (p.dt || '').split(' ')[1] || '');
+  const values = stationPoints.map(p => p[currentMetric]);
+  const color = METRIC_COLORS[currentMetric];
 
   chart = new Chart(canvas.getContext('2d'), {
-    type: 'line',
+    type: METRIC_TYPES[currentMetric],
     data: {
       labels,
       datasets: [{
-        data: temps,
-        borderColor: '#f2a541',
-        backgroundColor: 'rgba(242,165,65,0.12)',
+        data: values,
+        borderColor: color,
+        backgroundColor: METRIC_TYPES[currentMetric] === 'bar' ? color : color + '20',
         borderWidth: 2,
         pointRadius: 0,
         tension: 0.3,
-        fill: true,
+        fill: METRIC_TYPES[currentMetric] === 'line',
+        spanGaps: true,
       }]
     },
     options: {
@@ -449,11 +534,37 @@ async function loadStationChart(sifra){
       plugins: { legend: { display: false } },
       scales: {
         x: { ticks: { color: '#5e6b7a', maxTicksLimit: 5, font: {size: 10} }, grid: { color: '#2a3441' } },
-        y: { ticks: { color: '#5e6b7a', font: {size: 10} }, grid: { color: '#2a3441' } },
+        y: {
+          ticks: { color: '#5e6b7a', font: {size: 10}, callback: v => v + ' ' + METRIC_UNITS[currentMetric] },
+          grid: { color: '#2a3441' },
+        },
       }
     }
   });
 }
+
+function updateStarButton(){
+  const btn = document.getElementById('star-btn');
+  const s = findStation(currentSifra);
+  const isFeatured = s && s.stanica === FEATURED;
+  btn.classList.toggle('is-featured', isFeatured);
+  btn.textContent = isFeatured ? '★ Ovo je istaknuta stanica' : '☆ Postavi kao istaknuto';
+  btn.disabled = isFeatured;
+}
+
+document.getElementById('star-btn').addEventListener('click', () => {
+  const s = findStation(currentSifra);
+  if (!s || s.stanica === FEATURED) return;
+  const ok = confirm(`Postaviti "${s.stanica}" kao istaknutu stanicu na vrhu stranice?`);
+  if (!ok) return;
+  FEATURED = s.stanica;
+  localStorage.setItem('featuredStation', FEATURED);
+  updateStarButton();
+  const featured = allStations.find(x => x.stanica === FEATURED);
+  renderHero(featured);
+  applyFilter();
+  closeSheet();
+});
 
 /* ---------- Lists ---------- */
 function renderHero(s){
@@ -468,7 +579,6 @@ function renderHero(s){
   document.getElementById('hero-wind').textContent = fmtNum(s.vjetar, ' m/s');
   document.getElementById('hero-gust').textContent = fmtNum(s.udar, ' m/s');
   hero.onclick = () => s.sifra && openSheet(s.sifra);
-  hero.style.cursor = s.sifra ? 'pointer' : 'default';
 }
 
 function renderList(stations){
@@ -506,7 +616,7 @@ function renderList(stations){
         </div>
         <div class="row-right">
           <div class="row-temp">${tempVal}</div>
-          <div class="row-sub">${[rrSub, windSub].filter(Boolean).join(' &nbsp;·&nbsp; ')}</div>
+          <div class="row-sub">${[rrSub, windSub].filter(Boolean).join(' &nbsp;·&nbsp; ') || 'nema podataka'}</div>
         </div>
       `;
       row.addEventListener('click', () => s.sifra && openSheet(s.sifra));
