@@ -196,11 +196,12 @@
   .sheet-stat-val.heat{ color: var(--heat); }
   .sheet-stat-val.dim{ color: var(--muted-2); font-weight: 500; font-size: 0.95rem; }
 
-  .metric-tabs{ display:flex; gap:0.4rem; margin-bottom:0.7rem; }
+  .metric-tabs{ display:flex; gap:0.4rem; margin-bottom:0.7rem; flex-wrap: wrap; }
   .metric-tab{
     flex:1; text-align:center; padding: 0.5rem 0.4rem; border-radius: 10px;
     background: var(--surface); border: 1px solid var(--line);
     font-size: 0.78rem; font-weight: 600; color: var(--muted); cursor: pointer;
+    min-width: 45%;
   }
   .metric-tab.active{ background: var(--heat-dim); color: var(--heat); border-color: var(--heat-dim); }
 
@@ -302,6 +303,7 @@
     <div class="metric-tab active" data-metric="T">Temperatura</div>
     <div class="metric-tab" data-metric="RR">Padavine</div>
     <div class="metric-tab" data-metric="vjetar">Vjetar</div>
+    <div class="metric-tab" data-metric="insolacija">Insolacija</div>
   </div>
 
   <div class="chart-wrap">
@@ -363,10 +365,10 @@ const STATION_META = {
   "02ZBLJ10": {lat:43.15576, lng:19.12174, tip:"glavna"},
 };
 
-const METRIC_LABELS = { T: 'temperature', RR: 'padavina', vjetar: 'vjetra' };
-const METRIC_UNITS  = { T: '°C', RR: 'mm', vjetar: 'm/s' };
-const METRIC_COLORS = { T: '#f2a541', RR: '#4fb6c9', vjetar: '#8a97a6' };
-const METRIC_TYPES  = { T: 'line', RR: 'bar', vjetar: 'line' };
+const METRIC_LABELS = { T: 'temperature', RR: 'padavina', vjetar: 'vjetra', insolacija: 'insolacije' };
+const METRIC_UNITS  = { T: '°C', RR: 'mm', vjetar: 'm/s', insolacija: 'W/m²' };
+const METRIC_COLORS = { T: '#f2a541', RR: '#4fb6c9', vjetar: '#8a97a6', insolacija: '#e8b64a' };
+const METRIC_TYPES  = { T: 'line', RR: 'bar', vjetar: 'line', insolacija: 'line' };
 
 function windDeg(smjerKod){
   const n = parseFloat(smjerKod);
