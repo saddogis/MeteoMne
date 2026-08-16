@@ -13,7 +13,7 @@ DATA_DIR = "data"
 HISTORY_CSV = os.path.join(DATA_DIR, "history.csv")
 LATEST_JSON = os.path.join(DATA_DIR, "latest.json")
 STATION_HISTORY_DIR = os.path.join(DATA_DIR, "history")
-MAX_POINTS_PER_STATION = 96  # ~24h ako se skuplja na svakih ~15 min
+MAX_POINTS_PER_STATION = 96  # otprilike poslednjih ~16-24h, zavisno od učestalosti izvještavanja stanice
 
 FIELDNAMES = ["sifra", "tip", "stanica", "datum_vrijeme", "T", "RR", "vjetar", "smjer_kod", "udar"]
 
@@ -77,8 +77,17 @@ def append_new(rows, existing_keys):
     return new_rows
 
 
+def _to_float(value):
+    try:
+        if value in (None, ""):
+            return None
+        return float(value)
+    except (ValueError, TypeError):
+        return None
+
+
 def export_station_history():
-    """Pravi mali JSON fajl po stanici sa poslednjih N tačaka temperature, za grafikon."""
+    """Pravi mali JSON fajl po stanici sa poslednjih N tačaka (T, RR, vjetar), za grafikone."""
     if not os.path.exists(HISTORY_CSV):
         return
     by_station = {}
@@ -92,11 +101,12 @@ def export_station_history():
         trimmed = rows[-MAX_POINTS_PER_STATION:]
         points = []
         for r in trimmed:
-            try:
-                t_val = float(r["T"])
-            except (ValueError, TypeError):
-                continue
-            points.append({"dt": r["datum_vrijeme"], "T": t_val})
+            points.append({
+                "dt": r["datum_vrijeme"],
+                "T": _to_float(r.get("T")),
+                "RR": _to_float(r.get("RR")),
+                "vjetar": _to_float(r.get("vjetar")),
+            })
         safe_name = re.sub(r"[^A-Za-z0-9_-]", "_", sifra)
         with open(os.path.join(STATION_HISTORY_DIR, f"{safe_name}.json"), "w", encoding="utf-8") as out:
             json.dump(points, out, ensure_ascii=False)
