@@ -269,7 +269,7 @@
 
   <footer>
     Izvor: Zavod za hidrometeorologiju i seizmologiju Crne Gore.<br>
-    Napomena: zvanični izvor povremeno ima praznine u podacima za pojedine stanice (kvar senzora, prekid u prenosu) — takvi podaci se ovdje prikazuju kao „—".
+    Napomena: zvanični izvor povremeno ima praznine u podacima za pojedine stanice (kvar senzora, prekid u prenosu) — takvi podaci se ovdje prikazuju kao „—". Insolacija i pritisak dostupni su samo za glavne stanice.
   </footer>
 </main>
 
@@ -304,6 +304,7 @@
     <div class="metric-tab" data-metric="RR">Padavine</div>
     <div class="metric-tab" data-metric="vjetar">Vjetar</div>
     <div class="metric-tab" data-metric="insolacija">Insolacija</div>
+    <div class="metric-tab" data-metric="pritisak">Pritisak</div>
   </div>
 
   <div class="chart-wrap">
@@ -365,10 +366,10 @@ const STATION_META = {
   "02ZBLJ10": {lat:43.15576, lng:19.12174, tip:"glavna"},
 };
 
-const METRIC_LABELS = { T: 'temperature', RR: 'padavina', vjetar: 'vjetra', insolacija: 'insolacije' };
-const METRIC_UNITS  = { T: '°C', RR: 'mm', vjetar: 'm/s', insolacija: 'W/m²' };
-const METRIC_COLORS = { T: '#f2a541', RR: '#4fb6c9', vjetar: '#8a97a6', insolacija: '#e8b64a' };
-const METRIC_TYPES  = { T: 'line', RR: 'bar', vjetar: 'line', insolacija: 'line' };
+const METRIC_LABELS = { T: 'temperature', RR: 'padavina', vjetar: 'vjetra', insolacija: 'insolacije', pritisak: 'pritiska' };
+const METRIC_UNITS  = { T: '°C', RR: 'mm', vjetar: 'm/s', insolacija: 'W/m²', pritisak: 'hPa' };
+const METRIC_COLORS = { T: '#f2a541', RR: '#4fb6c9', vjetar: '#8a97a6', insolacija: '#e8b64a', pritisak: '#9c8cf2' };
+const METRIC_TYPES  = { T: 'line', RR: 'bar', vjetar: 'line', insolacija: 'line', pritisak: 'line' };
 
 function windDeg(smjerKod){
   const n = parseFloat(smjerKod);
