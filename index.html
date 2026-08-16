@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<title>Automatska mjerenja — Crna Gora</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; background: #f4f4f4; margin: 0; padding: 1rem; color: #222; }
+  h1 { font-size: 1.2rem; text-align: center; color: #006eb4; }
+  #updated { text-align: center; color: #666; font-size: 0.85rem; margin-bottom: 1rem; }
+  input[type=text] { width: 100%; padding: 0.6rem; margin-bottom: 0.75rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
+  .wrap { overflow-x: auto; background: white; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.12); }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 0.6rem; text-align: left; border-bottom: 1px solid #eee; font-size: 0.85rem; white-space: nowrap; }
+  th { background: #006eb4; color: white; position: sticky; top: 0; }
+  tr:hover { background: #eef6fc; }
+  .err { text-align: center; color: #b00020; padding: 1rem; }
+</style>
+</head>
+<body>
+
+<h1>Automatska mjerenja — Crna Gora</h1>
+<div id="updated">Učitavanje...</div>
+
+<input type="text" id="filter" placeholder="Pretraži stanicu...">
+
+<div class="wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Stanica</th>
+      <th>Datum</th>
+      <th>Termin</th>
+      <th>T °C</th>
+      <th>RR (mm)</th>
+      <th>Vjetar (m/s)</th>
+      <th>Udar</th>
+    </tr>
+  </thead>
+  <tbody id="tbody"></tbody>
+</table>
+</div>
+
+<script>
+async function load() {
+  try {
+    const res = await fetch('data/latest.json?_=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+
+    const updatedDate = new Date(data.updated_at);
+    document.getElementById('updated').textContent =
+      'Ažurirano: ' + updatedDate.toLocaleString('sr-Latn-ME');
+
+    const tbody = document.getElementById('tbody');
+    tbody.innerHTML = '';
+
+    data.stations.forEach(s => {
+      const parts = (s.datum_vrijeme || '').split(' ');
+      const datum = parts[0] || '';
+      const termin = parts[1] || '';
+      const tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td>' + s.stanica + '</td>' +
+        '<td>' + datum + '</td>' +
+        '<td>' + termin + '</td>' +
+        '<td>' + s.T + '</td>' +
+        '<td>' + s.RR + '</td>' +
+        '<td>' + s.vjetar + '</td>' +
+        '<td>' + s.udar + '</td>';
+      tbody.appendChild(tr);
+    });
+
+    filterTable();
+  } catch (e) {
+    document.getElementById('updated').innerHTML =
+      '<span class="err">Greška pri učitavanju podataka: ' + e.message + '</span>';
+  }
+}
+
+function filterTable() {
+  const q = document.getElementById('filter').value.toLowerCase();
+  document.querySelectorAll('#tbody tr').forEach(tr => {
+    const stanica = tr.children[0].textContent.toLowerCase();
+    tr.style.display = stanica.includes(q) ? '' : 'none';
+  });
+}
+
+document.getElementById('filter').addEventListener('input', filterTable);
+
+load();
+setInterval(load, 5 * 60 * 1000); // osvježi svakih 5 minuta
+</script>
+
+</body>
+</html>
