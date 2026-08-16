@@ -35,3 +35,29 @@ sifra,tip,stanica,datum_vrijeme,T,RR,vjetar,smjer_kod,udar
 02VELK30,klimatološka,Velika,16.08.2026 13:00,29.81,,,,
 02VELM20,klimatološka,Velimlje,16.08.2026 12:00,28.50,0.00,2.10,22,4.60
 02VIRP20,klimatološka,Virpazar,16.08.2026 13:00,31.70,0.00,,,
+02BAR010,glavna,Bar,16.08.2026 13:10,28.30,0.00,2.30,24,
+02BERA20,glavna,Berane,16.08.2026 13:00,30.25,0.00,1.40,2,3.50
+02CTNJ10,glavna,Cetinje,16.08.2026 13:10,30.70,0.00,0.70,8,
+02HNOV10,glavna,Herceg Novi,16.08.2026 13:10,30.20,0.00,2.30,10,
+02KOLS10,glavna,Kolašin,16.08.2026 13:10,29.10,0.00,0.90,14,
+02NIKS10,glavna,Nikšić,16.08.2026 13:10,30.70,0.00,6.50,16,
+02PDGR10,glavna,Podgorica,16.08.2026 13:10,33.20,0.00,4.70,16,
+02PLJV10,glavna,Pljevlja,16.08.2026 13:10,30.60,0.00,3.70,18,
+02ULCN10,glavna,Ulcinj,16.08.2026 13:10,30.30,0.00,5.10,18,
+02ZBLJ10,glavna,Žabljak,16.08.2026 13:10,24.50,0.00,1.40,18,
+02BIST20,klimatološka,Bistrica,16.08.2026 13:00,29.70,0.00,1.70,2,3.10
+02BOAN30,klimatološka,Boan,16.08.2026 13:00,29.38,,,,
+02BPLJ20,klimatološka,Bijelo Polje,16.08.2026 13:00,28.59,,,,
+02BUDV20,klimatološka,Budva,16.08.2026 13:00,28.64,,,,
+02CRKV30,klimatološka,Crkvice,16.08.2026 13:00,26.12,,,,
+02DDOB30,klimatološka,Donja Dobrilovina,16.08.2026 13:00,29.19,,,,
+02GOBU30,klimatološka,Gornja Bukovica,16.08.2026 13:00,24.57,,,,
+02GRAD30,klimatološka,Gradac,16.08.2026 13:00,30.99,,,,
+02IVKO30,klimatološka,Ivanova korita,16.08.2026 13:00,24.60,0.00,,,
+02KOSA30,klimatološka,Kosanica,16.08.2026 13:00,25.57,,,,
+02KOVR30,klimatološka,Kovren,16.08.2026 13:00,26.21,0.00,,,
+02KUKO30,klimatološka,Kučka korita,16.08.2026 13:00,23.50,0.00,,,
+02LKOT20,klimatološka,Luka Kotor,16.08.2026 12:46,30.40,,2.90,,6.90
+02PLZN20,klimatološka,Pluzine,16.08.2026 13:00,29.46,0.00,2.30,12,4.90
+02UBLI20,klimatološka,Ubli,16.08.2026 13:00,29.85,,,,
+02VELM20,klimatološka,Velimlje,16.08.2026 13:00,29.20,0.00,5.80,22,9.40
