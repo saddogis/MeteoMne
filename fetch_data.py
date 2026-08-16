@@ -84,8 +84,12 @@ def extract_balanced_object(html, var_name):
 
 
 def js_object_to_json(js_str):
-    """Kljucevi u DataAll nisu pod navodnicima (npr. G1:{...}) — dodajemo navodnike da bi json.loads mogao da parsira."""
-    return re.sub(r'([{,]\s*)(\w+)(\s*:)', r'\1"\2"\3', js_str)
+    """Kljucevi u DataAll nisu pod navodnicima (npr. G1:{...}) — dodajemo navodnike da bi json.loads mogao da parsira.
+    Takodje uklanjamo zalutale zareze prije ] ili } koje JS dozvoljava a JSON ne (npr. '[1,2,3,]')."""
+    s = re.sub(r'([{,]\s*)(\w+)(\s*:)', r'\1"\2"\3', js_str)
+    s = re.sub(r",\s*\]", "]", s)
+    s = re.sub(r",\s*\}", "}", s)
+    return s
 
 
 def fetch_graph_extra(sifra, tip, naziv):
