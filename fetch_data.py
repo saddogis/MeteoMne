@@ -5,6 +5,8 @@ import os
 from datetime import datetime, timezone
 
 import requests
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 URL = "https://www.meteo.co.me/Meteorologija/aws_m.php"
 DATA_DIR = "data"
@@ -15,7 +17,7 @@ FIELDNAMES = ["sifra", "tip", "stanica", "datum_vrijeme", "T", "RR", "vjetar", "
 
 
 def fetch_raw():
-    r = requests.get(URL, timeout=20, headers={"User-Agent": "Mozilla/5.0"})
+    r = requests.get(URL, timeout=20, headers={"User-Agent": "Mozilla/5.0"}, verify=False)
     r.raise_for_status()
     return r.text
 
