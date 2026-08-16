@@ -4,92 +4,299 @@
 <meta charset="UTF-8">
 <title>Automatska mjerenja — Crna Gora</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  body { font-family: Arial, Helvetica, sans-serif; background: #f4f4f4; margin: 0; padding: 1rem; color: #222; }
-  h1 { font-size: 1.2rem; text-align: center; color: #006eb4; }
-  #updated { text-align: center; color: #666; font-size: 0.85rem; margin-bottom: 1rem; }
-  input[type=text] { width: 100%; padding: 0.6rem; margin-bottom: 0.75rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
-  .wrap { overflow-x: auto; background: white; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.12); }
-  table { width: 100%; border-collapse: collapse; }
-  th, td { padding: 0.6rem; text-align: left; border-bottom: 1px solid #eee; font-size: 0.85rem; white-space: nowrap; }
-  th { background: #006eb4; color: white; position: sticky; top: 0; }
-  tr:hover { background: #eef6fc; }
-  .err { text-align: center; color: #b00020; padding: 1rem; }
+  :root{
+    --bg: #10151c;
+    --surface: #1a212b;
+    --surface-2: #212a35;
+    --line: #2a3441;
+    --text: #eef2f6;
+    --muted: #8a97a6;
+    --muted-2: #5e6b7a;
+    --heat: #f2a541;
+    --heat-dim: #7a5a2c;
+    --cool: #4fb6c9;
+    --live: #57c785;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: radial-gradient(1200px 600px at 50% -10%, #16202b 0%, var(--bg) 55%);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 3rem;
+  }
+  .num{ font-family: 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+
+  header{
+    position: sticky; top:0; z-index: 20;
+    background: rgba(16,21,28,0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    padding: 0.9rem 1rem 0.75rem;
+  }
+  .eyebrow{
+    font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted-2); font-weight: 600; margin-bottom: 0.15rem;
+  }
+  h1{ font-size: 1.15rem; margin: 0; font-weight: 700; letter-spacing: -0.01em; }
+  .status-row{
+    display:flex; align-items:center; gap:0.4rem; margin-top:0.35rem;
+    font-size: 0.78rem; color: var(--muted);
+  }
+  .dot{
+    width:7px; height:7px; border-radius:50%; background: var(--live);
+    box-shadow: 0 0 0 0 rgba(87,199,133,0.6);
+    animation: pulse 2.2s infinite;
+    flex-shrink:0;
+  }
+  @keyframes pulse{
+    0%{ box-shadow: 0 0 0 0 rgba(87,199,133,0.55); }
+    70%{ box-shadow: 0 0 0 7px rgba(87,199,133,0); }
+    100%{ box-shadow: 0 0 0 0 rgba(87,199,133,0); }
+  }
+  @media (prefers-reduced-motion: reduce){ .dot{ animation: none; } }
+
+  main{ max-width: 640px; margin: 0 auto; padding: 1rem; }
+
+  /* ---- Hero (Pljevlja) ---- */
+  .hero{
+    position: relative;
+    background: linear-gradient(160deg, var(--surface-2) 0%, var(--surface) 65%);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 1.25rem 1.25rem 1.1rem;
+    margin-bottom: 1.1rem;
+    overflow: hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background: radial-gradient(220px 140px at 88% -10%, rgba(242,165,65,0.16), transparent 70%);
+    pointer-events:none;
+  }
+  .hero-top{ display:flex; justify-content:space-between; align-items:flex-start; position:relative; }
+  .hero-label{ font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--heat); font-weight: 700; }
+  .hero-name{ font-size: 1.35rem; font-weight: 700; margin-top:0.15rem; letter-spacing:-0.01em; }
+  .hero-time{ font-size: 0.78rem; color: var(--muted); margin-top:0.2rem; }
+  .hero-temp{
+    font-size: 3.6rem; font-weight: 600; line-height:1; color: var(--heat);
+    display:flex; align-items:flex-start; gap:0.15rem;
+  }
+  .hero-temp sup{ font-size:1.4rem; font-weight:500; margin-top:0.3rem; }
+  .hero-stats{
+    display:flex; gap:1.4rem; margin-top:1rem; padding-top:0.85rem;
+    border-top: 1px solid var(--line); position:relative;
+  }
+  .hero-stat-label{ font-size:0.66rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted-2); margin-bottom:0.2rem; }
+  .hero-stat-val{ font-size:0.98rem; color:var(--muted); display:flex; align-items:center; gap:0.3rem; }
+
+  /* ---- Search ---- */
+  .search-wrap{ position: relative; margin-bottom: 0.9rem; }
+  .search-wrap svg{ position:absolute; left:0.85rem; top:50%; transform:translateY(-50%); opacity:0.45; }
+  input[type=text]{
+    width:100%; padding:0.7rem 0.9rem 0.7rem 2.5rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    color: var(--text); font-size: 0.92rem; font-family: inherit;
+  }
+  input[type=text]::placeholder{ color: var(--muted-2); }
+  input[type=text]:focus{ outline: 2px solid var(--heat-dim); outline-offset: 1px; border-color: var(--heat-dim); }
+
+  .section-label{
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--muted-2); font-weight: 700; margin: 1.1rem 0.2rem 0.5rem;
+  }
+
+  /* ---- Station list ---- */
+  .list{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .row:last-child{ border-bottom:none; }
+  .row-left{ min-width:0; }
+  .row-name{ font-size: 0.94rem; font-weight: 600; color: var(--text); }
+  .row-time{ font-size: 0.74rem; color: var(--muted-2); margin-top:0.1rem; }
+  .row-right{ text-align:right; flex-shrink:0; padding-left: 0.75rem; }
+  .row-temp{ font-size: 1.25rem; font-weight: 600; color: var(--heat); }
+  .row-sub{
+    font-size: 0.7rem; color: var(--muted-2); margin-top:0.15rem;
+    display:flex; gap:0.55rem; justify-content:flex-end; align-items:center;
+  }
+  .wind-arrow{
+    display:inline-block; width:8px; height:8px;
+    border-top: 1.5px solid var(--muted-2); border-right: 1.5px solid var(--muted-2);
+    transform: rotate(calc(var(--deg, 0deg) - 45deg));
+  }
+
+  #empty{ display:none; text-align:center; color: var(--muted-2); font-size:0.85rem; padding: 2rem 1rem; }
+  #err{ text-align:center; color:#e0777a; font-size:0.85rem; padding: 1rem; display:none; }
+  footer{ text-align:center; color: var(--muted-2); font-size: 0.7rem; margin-top: 1.5rem; }
 </style>
 </head>
 <body>
 
-<h1>Automatska mjerenja — Crna Gora</h1>
-<div id="updated">Učitavanje...</div>
+<header>
+  <div class="eyebrow">ZHMS · Crna Gora</div>
+  <h1>Automatska mjerenja</h1>
+  <div class="status-row"><span class="dot"></span><span id="updated">Učitavanje...</span></div>
+</header>
 
-<input type="text" id="filter" placeholder="Pretraži stanicu...">
+<main>
 
-<div class="wrap">
-<table>
-  <thead>
-    <tr>
-      <th>Stanica</th>
-      <th>Datum</th>
-      <th>Termin</th>
-      <th>T °C</th>
-      <th>RR (mm)</th>
-      <th>Vjetar (m/s)</th>
-      <th>Udar</th>
-    </tr>
-  </thead>
-  <tbody id="tbody"></tbody>
-</table>
-</div>
+  <div class="hero" id="hero" hidden>
+    <div class="hero-top">
+      <div>
+        <div class="hero-label">Izdvojeno</div>
+        <div class="hero-name" id="hero-name">Pljevlja</div>
+        <div class="hero-time" id="hero-time">—</div>
+      </div>
+      <div class="hero-temp"><span id="hero-t">—</span><sup>°C</sup></div>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-label">Padavine</div>
+        <div class="hero-stat-val" id="hero-rr">—</div>
+      </div>
+      <div>
+        <div class="hero-stat-label">Vjetar</div>
+        <div class="hero-stat-val" id="hero-wind">—</div>
+      </div>
+      <div>
+        <div class="hero-stat-label">Udar</div>
+        <div class="hero-stat-val" id="hero-gust">—</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="search-wrap">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="filter" placeholder="Pretraži stanicu...">
+  </div>
+
+  <div class="section-label">Ostale stanice</div>
+  <div class="list" id="list"></div>
+  <div id="empty">Nema stanica koje odgovaraju pretrazi.</div>
+  <div id="err"></div>
+
+  <footer>Izvor: Zavod za hidrometeorologiju i seizmologiju Crne Gore</footer>
+</main>
 
 <script>
-async function load() {
-  try {
+const FEATURED = "Pljevlja";
+let allStations = [];
+
+function windDeg(smjerKod){
+  const n = parseFloat(smjerKod);
+  if (isNaN(n)) return null;
+  return Math.round(n * 11.25);
+}
+
+function fmtNum(v, unit){
+  if (v === undefined || v === null || v === "") return "—";
+  return v + (unit || "");
+}
+
+function renderHero(s){
+  const hero = document.getElementById('hero');
+  if (!s){ hero.hidden = true; return; }
+  hero.hidden = false;
+  const parts = (s.datum_vrijeme || '').split(' ');
+  document.getElementById('hero-name').textContent = s.stanica;
+  document.getElementById('hero-time').textContent = (parts[0] || '') + (parts[1] ? '  ·  ' + parts[1] : '');
+  document.getElementById('hero-t').textContent = s.T !== "" && s.T !== undefined ? Math.round(parseFloat(s.T)) : '—';
+  document.getElementById('hero-rr').textContent = fmtNum(s.RR, ' mm');
+  document.getElementById('hero-wind').textContent = fmtNum(s.vjetar, ' m/s');
+  document.getElementById('hero-gust').textContent = fmtNum(s.udar, ' m/s');
+}
+
+function renderList(stations){
+  const list = document.getElementById('list');
+  const empty = document.getElementById('empty');
+  list.innerHTML = '';
+
+  if (stations.length === 0){
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  stations
+    .slice()
+    .sort((a,b) => a.stanica.localeCompare(b.stanica, 'sr'))
+    .forEach(s => {
+      const parts = (s.datum_vrijeme || '').split(' ');
+      const termin = parts[1] || '';
+      const deg = windDeg(s.smjer_kod);
+
+      const row = document.createElement('div');
+      row.className = 'row';
+
+      const tempVal = (s.T !== "" && s.T !== undefined) ? Math.round(parseFloat(s.T)) + '°' : '—';
+      const windSub = (s.vjetar !== "" && s.vjetar !== undefined)
+        ? `<span class="wind-arrow" style="--deg:${deg !== null ? deg : 0}deg"></span>${s.vjetar} m/s`
+        : '';
+      const rrSub = (s.RR !== "" && s.RR !== undefined) ? `${s.RR} mm` : '';
+
+      row.innerHTML = `
+        <div class="row-left">
+          <div class="row-name">${s.stanica}</div>
+          <div class="row-time">${termin}</div>
+        </div>
+        <div class="row-right">
+          <div class="row-temp">${tempVal}</div>
+          <div class="row-sub">${[rrSub, windSub].filter(Boolean).join(' &nbsp;·&nbsp; ')}</div>
+        </div>
+      `;
+      list.appendChild(row);
+    });
+}
+
+function applyFilter(){
+  const q = document.getElementById('filter').value.toLowerCase().trim();
+  const rest = allStations.filter(s => s.stanica !== FEATURED);
+  const filtered = q ? rest.filter(s => s.stanica.toLowerCase().includes(q)) : rest;
+  renderList(filtered);
+}
+
+async function load(){
+  try{
     const res = await fetch('data/latest.json?_=' + Date.now());
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
 
+    document.getElementById('err').style.display = 'none';
     const updatedDate = new Date(data.updated_at);
     document.getElementById('updated').textContent =
-      'Ažurirano: ' + updatedDate.toLocaleString('sr-Latn-ME');
+      'Ažurirano ' + updatedDate.toLocaleTimeString('sr-Latn-ME', {hour:'2-digit', minute:'2-digit'});
 
-    const tbody = document.getElementById('tbody');
-    tbody.innerHTML = '';
-
-    data.stations.forEach(s => {
-      const parts = (s.datum_vrijeme || '').split(' ');
-      const datum = parts[0] || '';
-      const termin = parts[1] || '';
-      const tr = document.createElement('tr');
-      tr.innerHTML =
-        '<td>' + s.stanica + '</td>' +
-        '<td>' + datum + '</td>' +
-        '<td>' + termin + '</td>' +
-        '<td>' + s.T + '</td>' +
-        '<td>' + s.RR + '</td>' +
-        '<td>' + s.vjetar + '</td>' +
-        '<td>' + s.udar + '</td>';
-      tbody.appendChild(tr);
-    });
-
-    filterTable();
-  } catch (e) {
-    document.getElementById('updated').innerHTML =
-      '<span class="err">Greška pri učitavanju podataka: ' + e.message + '</span>';
+    allStations = data.stations || [];
+    const featured = allStations.find(s => s.stanica === FEATURED);
+    renderHero(featured);
+    applyFilter();
+  } catch(e){
+    const err = document.getElementById('err');
+    err.style.display = 'block';
+    err.textContent = 'Greška pri učitavanju podataka: ' + e.message;
   }
 }
 
-function filterTable() {
-  const q = document.getElementById('filter').value.toLowerCase();
-  document.querySelectorAll('#tbody tr').forEach(tr => {
-    const stanica = tr.children[0].textContent.toLowerCase();
-    tr.style.display = stanica.includes(q) ? '' : 'none';
-  });
-}
-
-document.getElementById('filter').addEventListener('input', filterTable);
+document.getElementById('filter').addEventListener('input', applyFilter);
 
 load();
-setInterval(load, 5 * 60 * 1000); // osvježi svakih 5 minuta
+setInterval(load, 5 * 60 * 1000);
 </script>
 
 </body>
