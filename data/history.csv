@@ -107,3 +107,23 @@ sifra,tip,stanica,datum_vrijeme,T,RR,vjetar,smjer_kod,udar
 02VELK30,klimatološka,Velika,16.08.2026 14:00,28.04,,,,
 02VELM20,klimatološka,Velimlje,16.08.2026 14:00,30.00,0.00,3.70,24,6.50
 02VIRP20,klimatološka,Virpazar,16.08.2026 14:00,33.00,0.00,,,
+02BAR010,glavna,Bar,16.08.2026 15:00,29.20,0.00,1.70,24,2.70
+02CTNJ10,glavna,Cetinje,16.08.2026 15:00,30.00,0.00,3.20,20,
+02HNOV10,glavna,Herceg Novi,16.08.2026 15:00,30.60,0.00,3.00,10,
+02KOLS10,glavna,Kolašin,16.08.2026 15:00,29.20,0.00,1.90,20,4.20
+02NIKS10,glavna,Nikšić,16.08.2026 15:00,31.00,0.00,6.00,16,
+02PDGR10,glavna,Podgorica,16.08.2026 15:00,34.60,0.00,4.60,16,
+02PLJV10,glavna,Pljevlja,16.08.2026 15:00,30.90,0.00,1.00,2,
+02ULCN10,glavna,Ulcinj,16.08.2026 15:00,29.50,0.00,4.60,22,
+02ZBLJ10,glavna,Žabljak,16.08.2026 15:00,23.70,0.00,2.20,20,
+02DANL20,klimatološka,Danilovgrad,16.08.2026 15:00,35.70,,,,
+02LKOT20,klimatološka,Luka Kotor,16.08.2026 14:36,29.20,,1.60,,5.40
+02MAMO30,klimatološka,Manastir Morača,16.08.2026 15:00,35.23,,,,
+02MATE30,klimatološka,Matesevo,16.08.2026 15:00,27.48,0.00,,,
+02MOKR30,klimatološka,Mokro,16.08.2026 15:00,26.88,,,,
+02NJGV30,klimatološka,Njegovuđa,16.08.2026 15:00,25.26,,,,
+02POSC30,klimatološka,Pošćenje,16.08.2026 15:00,28.59,,,,
+02STAB30,klimatološka,Stabna,16.08.2026 15:00,31.26,,,,
+02STIT30,klimatološka,Štitarica,16.08.2026 15:00,27.57,,,,
+02VELK30,klimatološka,Velika,16.08.2026 15:00,26.67,,,,
+02VIRP20,klimatološka,Virpazar,16.08.2026 15:00,32.10,0.00,,,
