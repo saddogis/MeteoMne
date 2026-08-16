@@ -165,3 +165,13 @@ sifra,tip,stanica,datum_vrijeme,T,RR,vjetar,smjer_kod,udar,insolacija,pritisak
 02ZBLJ10,glavna,Žabljak,17.08.2026 01:10,12.80,0.00,0.80,18,,0.0,857.6
 02LKOT20,klimatološka,Luka Kotor,17.08.2026 00:41,24.60,,0.90,,1.60,,
 02UBLI20,klimatološka,Ubli,17.08.2026 01:00,22.00,,,,,,
+02BAR010,glavna,Bar,17.08.2026 01:30,24.30,0.00,1.10,6,,0.3,1012.5
+02CTNJ10,glavna,Cetinje,17.08.2026 01:30,16.20,0.00,0.20,8,,0.5,942.0
+02HNOV10,glavna,Herceg Novi,17.08.2026 01:30,21.70,0.00,0.50,28,,0.0,1008.2
+02KOLS10,glavna,Kolašin,17.08.2026 01:30,13.20,0.00,0.10,24,,0.0,910.2
+02NIKS10,glavna,Nikšić,17.08.2026 01:30,19.20,0.00,0.50,10,,0.0,941.3
+02PDGR10,glavna,Podgorica,17.08.2026 01:30,25.40,0.00,1.20,24,,0.0,1007.1
+02PLJV10,glavna,Pljevlja,17.08.2026 01:30,14.80,0.00,0.70,30,,0.0,926.3
+02ULCN10,glavna,Ulcinj,17.08.2026 01:30,22.50,0.00,0.50,30,,0.0,1012.8
+02ZBLJ10,glavna,Žabljak,17.08.2026 01:30,12.70,0.00,0.20,22,,0.1,857.5
+02LKOT20,klimatološka,Luka Kotor,17.08.2026 00:56,24.10,,0.00,,0.90,,
