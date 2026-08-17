@@ -1014,3 +1014,13 @@ sifra,tip,stanica,datum_vrijeme,T,RR,vjetar,smjer_kod,udar,insolacija,pritisak
 02VELK30,klimatološka,Velika,17.08.2026 23:00,14.46,,,,,,
 02VELM20,klimatološka,Velimlje,17.08.2026 23:00,16.60,0.00,0.20,32,0.40,,
 02VIRP20,klimatološka,Virpazar,17.08.2026 23:00,22.10,0.00,,,,,
+02BAR010,glavna,Bar,17.08.2026 23:40,24.10,0.00,2.10,6,,1.0,1008.9
+02CTNJ10,glavna,Cetinje,17.08.2026 23:40,15.30,0.00,0.20,32,,0.0,938.8
+02HNOV10,glavna,Herceg Novi,17.08.2026 23:40,23.20,0.00,1.20,22,,1.1,1004.9
+02KOLS10,glavna,Kolašin,17.08.2026 23:40,14.80,0.00,0.40,20,,0.6,906.9
+02NIKS10,glavna,Nikšić,17.08.2026 23:40,20.40,0.00,3.30,2,4.40,2.4,938.4
+02PDGR10,glavna,Podgorica,17.08.2026 23:40,26.10,0.00,1.30,24,,0.0,1003.6
+02PLJV10,glavna,Pljevlja,17.08.2026 23:40,19.70,0.00,0.00,32,,0.0,922.5
+02ULCN10,glavna,Ulcinj,17.08.2026 23:40,21.90,0.00,1.80,30,2.20,0.0,1009.2
+02ZBLJ10,glavna,Žabljak,17.08.2026 23:40,13.80,0.00,1.30,18,,0.4,854.3
+02LKOT20,klimatološka,Luka Kotor,17.08.2026 23:06,24.40,,0.30,,1.20,,
