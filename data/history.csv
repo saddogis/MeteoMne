@@ -1844,3 +1844,29 @@ sifra,tip,stanica,datum_vrijeme,T,RR,vjetar,smjer_kod,udar,insolacija,pritisak
 02STIT30,klimatološka,Štitarica,18.08.2026 21:00,14.44,,,,,,
 02VELK30,klimatološka,Velika,18.08.2026 21:00,16.77,,,,,,
 02VIRP20,klimatološka,Virpazar,18.08.2026 21:00,26.10,0.00,,,,,
+02BAR010,glavna,Bar,18.08.2026 21:30,26.40,0.00,1.30,8,,0.1,1009.0
+02BERA20,glavna,Berane,18.08.2026 21:00,19.38,0.00,0.50,14,1.50,,935.4
+02CTNJ10,glavna,Cetinje,18.08.2026 21:30,18.60,0.00,0.30,12,,0.7,939.1
+02HNOV10,glavna,Herceg Novi,18.08.2026 21:30,25.00,0.00,1.00,24,,0.7,1005.0
+02KOLS10,glavna,Kolašin,18.08.2026 21:30,14.80,0.00,0.40,20,,0.4,908.2
+02NIKS10,glavna,Nikšić,18.08.2026 21:30,21.20,0.00,3.70,4,4.90,2.0,938.6
+02PDGR10,glavna,Podgorica,18.08.2026 21:30,28.30,0.00,4.80,2,,0.2,1003.5
+02PLJV10,glavna,Pljevlja,18.08.2026 21:30,16.60,0.00,1.00,22,,0.7,924.8
+02ULCN10,glavna,Ulcinj,18.08.2026 21:30,25.70,0.00,0.80,30,,0.0,1009.2
+02ZBLJ10,glavna,Žabljak,18.08.2026 21:30,12.20,0.00,1.10,22,,1.2,855.8
+02BIST20,klimatološka,Bistrica,18.08.2026 21:00,16.90,0.00,1.40,20,2.30,,
+02BOAN30,klimatološka,Boan,18.08.2026 21:00,18.26,,,,,,
+02BPLJ20,klimatološka,Bijelo Polje,18.08.2026 21:00,17.69,,,,,,
+02BUDV20,klimatološka,Budva,18.08.2026 21:00,27.71,,,,,,
+02CRKV30,klimatološka,Crkvice,18.08.2026 21:00,15.09,,,,,,
+02DDOB30,klimatološka,Donja Dobrilovina,18.08.2026 21:00,17.12,,,,,,
+02GOBU30,klimatološka,Gornja Bukovica,18.08.2026 21:00,11.52,,,,,,
+02GRAD30,klimatološka,Gradac,18.08.2026 21:00,14.34,,,,,,
+02IVKO30,klimatološka,Ivanova korita,18.08.2026 21:00,15.14,0.00,,,,,
+02KOSA30,klimatološka,Kosanica,18.08.2026 21:00,8.93,,,,,,
+02KOVR30,klimatološka,Kovren,18.08.2026 21:00,15.90,0.00,,,,,
+02KUKO30,klimatološka,Kučka korita,18.08.2026 21:00,16.18,0.00,,,,,
+02LKOT20,klimatološka,Luka Kotor,18.08.2026 21:06,24.50,,0.50,,1.10,,
+02PLZN20,klimatološka,Pluzine,18.08.2026 21:00,20.80,0.00,0.60,32,1.80,,
+02UBLI20,klimatološka,Ubli,18.08.2026 21:00,22.16,,,,,,
+02VELM20,klimatološka,Velimlje,18.08.2026 21:00,20.90,0.00,0.40,14,0.70,,
