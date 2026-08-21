@@ -4435,3 +4435,29 @@ sifra,tip,stanica,datum_vrijeme,T,RR,vjetar,smjer_kod,udar,insolacija,pritisak
 02STIT30,klimatološka,Štitarica,21.08.2026 16:00,28.92,,,,,,
 02VELK30,klimatološka,Velika,21.08.2026 16:00,31.48,,,,,,
 02VIRP20,klimatološka,Virpazar,21.08.2026 16:00,35.60,0.00,,,,,
+02BAR010,glavna,Bar,21.08.2026 16:50,30.50,0.00,1.50,24,,448.9,1011.0
+02BERA20,glavna,Berane,21.08.2026 16:00,35.28,0.00,2.10,20,5.80,,934.0
+02CTNJ10,glavna,Cetinje,21.08.2026 16:50,32.00,0.00,1.50,6,,451.1,940.3
+02HNOV10,glavna,Herceg Novi,21.08.2026 16:50,30.90,0.00,2.40,8,,440.1,1006.7
+02KOLS10,glavna,Kolašin,21.08.2026 16:50,30.80,0.00,0.30,14,,469.5,908.3
+02NIKS10,glavna,Nikšić,21.08.2026 16:50,31.80,0.00,7.80,16,,224.4,939.2
+02PDGR10,glavna,Podgorica,21.08.2026 16:50,35.90,0.00,5.30,16,,442.9,1004.5
+02PLJV10,glavna,Pljevlja,21.08.2026 16:50,33.60,0.00,5.10,14,,417.7,922.9
+02ULCN10,glavna,Ulcinj,21.08.2026 16:50,30.80,0.00,3.10,22,,479.8,1011.0
+02ZBLJ10,glavna,Žabljak,21.08.2026 16:50,27.40,0.00,2.60,18,,481.2,856.5
+02BIST20,klimatološka,Bistrica,21.08.2026 16:00,32.90,0.00,2.80,16,5.20,,
+02BOAN30,klimatološka,Boan,21.08.2026 16:00,31.93,,,,,,
+02BPLJ20,klimatološka,Bijelo Polje,21.08.2026 16:00,34.11,,,,,,
+02BUDV20,klimatološka,Budva,21.08.2026 16:00,30.91,,,,,,
+02CRKV30,klimatološka,Crkvice,21.08.2026 16:00,26.65,,,,,,
+02DDOB30,klimatološka,Donja Dobrilovina,21.08.2026 16:00,32.41,,,,,,
+02GOBU30,klimatološka,Gornja Bukovica,21.08.2026 16:00,27.79,,,,,,
+02GRAD30,klimatološka,Gradac,21.08.2026 16:00,35.93,,,,,,
+02IVKO30,klimatološka,Ivanova korita,21.08.2026 16:00,26.51,0.00,,,,,
+02KOSA30,klimatološka,Kosanica,21.08.2026 16:00,30.00,,,,,,
+02KOVR30,klimatološka,Kovren,21.08.2026 16:00,29.41,0.00,,,,,
+02KUKO30,klimatološka,Kučka korita,21.08.2026 16:00,25.97,0.00,,,,,
+02LKOT20,klimatološka,Luka Kotor,21.08.2026 16:21,32.30,,1.30,,2.90,,
+02PLZN20,klimatološka,Pluzine,21.08.2026 16:00,33.00,0.00,2.00,22,6.50,,
+02UBLI20,klimatološka,Ubli,21.08.2026 16:00,33.07,,,,,,
+02VELM20,klimatološka,Velimlje,21.08.2026 16:00,31.70,0.00,3.60,22,5.40,,
