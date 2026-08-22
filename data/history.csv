@@ -5080,3 +5080,23 @@ sifra,tip,stanica,datum_vrijeme,T,RR,vjetar,smjer_kod,udar,insolacija,pritisak
 02VELK30,klimatološka,Velika,22.08.2026 08:00,18.77,,,,,,
 02VELM20,klimatološka,Velimlje,22.08.2026 08:00,19.20,0.00,0.50,32,0.60,,
 02VIRP20,klimatološka,Virpazar,22.08.2026 08:00,23.90,0.00,,,,,
+02BAR010,glavna,Bar,22.08.2026 09:00,29.70,0.00,3.30,26,,447.2,1011.5
+02CTNJ10,glavna,Cetinje,22.08.2026 09:00,26.00,0.00,0.20,32,,453.0,941.1
+02HNOV10,glavna,Herceg Novi,22.08.2026 09:00,29.60,0.00,1.50,10,,453.3,1007.3
+02KOLS10,glavna,Kolašin,22.08.2026 09:00,19.10,0.00,0.50,18,,125.9,909.6
+02NIKS10,glavna,Nikšić,22.08.2026 09:00,25.40,0.00,0.10,22,,463.7,940.8
+02PDGR10,glavna,Podgorica,22.08.2026 09:00,30.70,0.00,0.60,26,,442.0,1006.1
+02PLJV10,glavna,Pljevlja,22.08.2026 09:00,21.40,0.00,0.60,14,,455.2,926.3
+02ULCN10,glavna,Ulcinj,22.08.2026 09:00,29.70,0.00,2.20,6,,448.8,1011.8
+02ZBLJ10,glavna,Žabljak,22.08.2026 09:00,22.30,0.00,2.30,24,3.50,482.7,857.1
+02DANL20,klimatološka,Danilovgrad,22.08.2026 09:00,26.40,,,,,,
+02LKOT20,klimatološka,Luka Kotor,22.08.2026 08:36,28.20,,0.00,,0.90,,
+02MAMO30,klimatološka,Manastir Morača,22.08.2026 09:00,24.78,,,,,,
+02MATE30,klimatološka,Matesevo,22.08.2026 09:00,19.63,0.00,,,,,
+02MOKR30,klimatološka,Mokro,22.08.2026 09:00,21.98,,,,,,
+02NJGV30,klimatološka,Njegovuđa,22.08.2026 09:00,23.07,,,,,,
+02POSC30,klimatološka,Pošćenje,22.08.2026 09:00,21.38,,,,,,
+02STAB30,klimatološka,Stabna,22.08.2026 09:00,23.76,,,,,,
+02STIT30,klimatološka,Štitarica,22.08.2026 09:00,23.66,,,,,,
+02VELK30,klimatološka,Velika,22.08.2026 09:00,23.89,,,,,,
+02VIRP20,klimatološka,Virpazar,22.08.2026 09:00,28.00,0.00,,,,,
