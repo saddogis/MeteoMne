@@ -6738,3 +6738,29 @@ sifra,tip,stanica,datum_vrijeme,T,RR,vjetar,smjer_kod,udar,insolacija,pritisak
 02STIT30,klimatološka,Štitarica,24.08.2026 00:00,13.76,,,,,,
 02VELK30,klimatološka,Velika,24.08.2026 00:00,15.88,,,,,,
 02VIRP20,klimatološka,Virpazar,24.08.2026 00:00,23.30,0.00,,,,,
+02BAR010,glavna,Bar,24.08.2026 00:20,25.60,0.00,1.60,8,2.10,0.6,1013.1
+02BERA20,glavna,Berane,24.08.2026 00:00,18.67,0.00,0.30,8,0.90,,940.39
+02CTNJ10,glavna,Cetinje,24.08.2026 00:20,18.10,0.00,0.40,8,,0.0,943.5
+02HNOV10,glavna,Herceg Novi,24.08.2026 00:20,25.60,0.00,0.40,22,,0.1,1008.8
+02KOLS10,glavna,Kolašin,24.08.2026 00:20,15.60,0.00,1.20,18,,0.3,912.8
+02NIKS10,glavna,Nikšić,24.08.2026 00:20,21.50,0.00,1.70,2,,0.0,942.9
+02PDGR10,glavna,Podgorica,24.08.2026 00:20,28.40,0.00,0.30,20,,0.0,1007.9
+02PLJV10,glavna,Pljevlja,24.08.2026 00:20,16.70,0.00,0.30,22,,0.0,930.2
+02ULCN10,glavna,Ulcinj,24.08.2026 00:20,24.20,0.00,0.50,30,,0.1,1013.4
+02ZBLJ10,glavna,Žabljak,24.08.2026 00:20,12.80,0.00,1.20,22,,0.6,860.7
+02BIST20,klimatološka,Bistrica,24.08.2026 00:00,16.80,0.00,1.40,18,1.60,,
+02BOAN30,klimatološka,Boan,24.08.2026 00:00,15.64,,,,,,
+02BPLJ20,klimatološka,Bijelo Polje,24.08.2026 00:00,17.67,,,,,,
+02BUDV20,klimatološka,Budva,24.08.2026 00:00,26.64,,,,,,
+02CRKV30,klimatološka,Crkvice,24.08.2026 00:00,17.09,,,,,,
+02DDOB30,klimatološka,Donja Dobrilovina,24.08.2026 00:00,16.83,,,,,,
+02GOBU30,klimatološka,Gornja Bukovica,24.08.2026 00:00,11.98,,,,,,
+02GRAD30,klimatološka,Gradac,24.08.2026 00:00,13.91,,,,,,
+02IVKO30,klimatološka,Ivanova korita,24.08.2026 00:00,16.65,0.00,,,,,
+02KOSA30,klimatološka,Kosanica,24.08.2026 00:00,8.82,,,,,,
+02KOVR30,klimatološka,Kovren,24.08.2026 00:00,17.03,0.00,,,,,
+02KUKO30,klimatološka,Kučka korita,24.08.2026 00:00,13.61,0.00,,,,,
+02LKOT20,klimatološka,Luka Kotor,24.08.2026 00:01,25.80,,0.80,,1.60,,
+02PLZN20,klimatološka,Pluzine,24.08.2026 00:00,20.33,0.00,1.20,28,2.70,,
+02UBLI20,klimatološka,Ubli,24.08.2026 00:00,24.48,,,,,,
+02VELM20,klimatološka,Velimlje,24.08.2026 00:00,19.20,0.00,0.70,10,1.20,,
