@@ -7429,3 +7429,39 @@ sifra,tip,stanica,datum_vrijeme,T,RR,vjetar,smjer_kod,udar,insolacija,pritisak
 02ULCN10,glavna,Ulcinj,24.08.2026 19:50,28.70,0.00,5.90,24,,0.1,1012.4
 02ZBLJ10,glavna,Žabljak,24.08.2026 19:50,21.20,0.00,2.20,4,,1.6,858.9
 02LKOT20,klimatološka,Luka Kotor,24.08.2026 19:21,30.30,,3.00,,4.50,,
+02BAR010,glavna,Bar,24.08.2026 20:40,26.00,0.00,0.40,2,,0.2,1013.3
+02BERA20,glavna,Berane,24.08.2026 20:00,24.83,0.00,0.50,4,2.10,,937.42
+02CTNJ10,glavna,Cetinje,24.08.2026 20:40,21.80,0.00,0.20,10,,0.4,943.0
+02HNOV10,glavna,Herceg Novi,24.08.2026 20:40,27.80,0.00,0.80,28,,0.1,1009.1
+02KOLS10,glavna,Kolašin,24.08.2026 20:40,19.60,0.00,0.90,20,,0.3,911.2
+02NIKS10,glavna,Nikšić,24.08.2026 20:40,26.30,0.00,1.30,26,,0.0,942.5
+02PDGR10,glavna,Podgorica,24.08.2026 20:40,32.00,0.00,0.70,12,,0.1,1007.0
+02PLJV10,glavna,Pljevlja,24.08.2026 20:40,24.90,0.00,1.20,18,,0.0,927.7
+02ULCN10,glavna,Ulcinj,24.08.2026 20:40,28.30,0.00,5.50,24,,0.0,1012.7
+02ZBLJ10,glavna,Žabljak,24.08.2026 20:40,18.70,0.00,1.60,18,2.60,1.4,859.3
+02BIST20,klimatološka,Bistrica,24.08.2026 20:00,22.50,0.00,1.20,14,1.80,,
+02BOAN30,klimatološka,Boan,24.08.2026 20:00,22.08,,,,,,
+02BPLJ20,klimatološka,Bijelo Polje,24.08.2026 20:00,24.08,,,,,,
+02BUDV20,klimatološka,Budva,24.08.2026 20:00,28.38,,,,,,
+02CRKV30,klimatološka,Crkvice,24.08.2026 20:00,18.71,,,,,,
+02DANL20,klimatološka,Danilovgrad,24.08.2026 20:00,29.10,,,,,,
+02DDOB30,klimatološka,Donja Dobrilovina,24.08.2026 20:00,20.84,,,,,,
+02GOBU30,klimatološka,Gornja Bukovica,24.08.2026 20:00,18.47,,,,,,
+02GRAD30,klimatološka,Gradac,24.08.2026 20:00,21.57,,,,,,
+02IVKO30,klimatološka,Ivanova korita,24.08.2026 20:00,19.46,0.00,,,,,
+02KOSA30,klimatološka,Kosanica,24.08.2026 20:00,20.12,,,,,,
+02KOVR30,klimatološka,Kovren,24.08.2026 20:00,21.83,0.00,,,,,
+02KUKO30,klimatološka,Kučka korita,24.08.2026 20:00,18.11,0.00,,,,,
+02LKOT20,klimatološka,Luka Kotor,24.08.2026 20:11,28.50,,1.10,,2.50,,
+02MAMO30,klimatološka,Manastir Morača,24.08.2026 20:00,25.88,,,,,,
+02MATE30,klimatološka,Matesevo,24.08.2026 20:00,19.32,0.00,,,,,
+02MOKR30,klimatološka,Mokro,24.08.2026 20:00,23.40,,,,,,
+02NJGV30,klimatološka,Njegovuđa,24.08.2026 20:00,20.99,,,,,,
+02PLZN20,klimatološka,Pluzine,24.08.2026 20:00,26.05,0.00,1.50,14,2.50,,
+02POSC30,klimatološka,Pošćenje,24.08.2026 20:00,20.00,,,,,,
+02STAB30,klimatološka,Stabna,24.08.2026 20:00,22.80,,,,,,
+02STIT30,klimatološka,Štitarica,24.08.2026 20:00,17.57,,,,,,
+02UBLI20,klimatološka,Ubli,24.08.2026 20:00,26.72,,,,,,
+02VELK30,klimatološka,Velika,24.08.2026 20:00,20.71,,,,,,
+02VELM20,klimatološka,Velimlje,24.08.2026 20:00,24.10,0.00,0.80,10,1.20,,
+02VIRP20,klimatološka,Virpazar,24.08.2026 20:00,30.10,0.00,,,,,
