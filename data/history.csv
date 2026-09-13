@@ -13430,3 +13430,40 @@ sifra,tip,stanica,datum_vrijeme,T,RR,vjetar,smjer_kod,udar,insolacija,pritisak
 02VELK30,klimatološka,Velika,13.09.2026 22:00,8.41,,,,,,
 02VELM20,klimatološka,Velimlje,13.09.2026 22:00,12.80,0.00,1.10,14,1.80,,
 02VIRP20,klimatološka,Virpazar,13.09.2026 22:00,17.40,0.00,,,,,
+02BAR010,glavna,Bar,14.09.2026 01:00,24.10,0.00,5.40,6,,0.3,1016.6
+02BERA20,glavna,Berane,14.09.2026 00:00,8.47,0.00,0.80,8,1.60,,942.69
+02CTNJ10,glavna,Cetinje,14.09.2026 01:00,9.30,0.00,0.30,32,,0.2,945.8
+02HNOV10,glavna,Herceg Novi,14.09.2026 01:00,19.50,0.00,0.60,30,,0.0,1012.5
+02KOLS10,glavna,Kolašin,14.09.2026 01:00,5.70,0.00,0.80,20,,0.4,914.4
+02NIKS10,glavna,Nikšić,14.09.2026 01:00,14.60,0.00,1.70,28,,0.0,945.4
+02PDGR10,glavna,Podgorica,14.09.2026 01:00,21.70,0.00,2.20,28,,0.0,1011.9
+02PLJV10,glavna,Pljevlja,14.09.2026 01:00,7.20,0.00,0.00,18,,0.0,932.1
+02ULCN10,glavna,Ulcinj,14.09.2026 01:00,19.40,0.00,3.10,4,,0.0,1017.2
+02ZBLJ10,glavna,Žabljak,14.09.2026 01:00,5.10,0.00,1.30,22,,0.0,860.3
+02BIST20,klimatološka,Bistrica,14.09.2026 00:00,7.30,0.00,1.10,16,1.40,,
+02BOAN30,klimatološka,Boan,14.09.2026 00:00,5.68,,,,,,
+02BPLJ20,klimatološka,Bijelo Polje,14.09.2026 00:00,9.34,,,,,,
+02BUDV20,klimatološka,Budva,14.09.2026 00:00,22.12,,,,,,
+02CRKV30,klimatološka,Crkvice,14.09.2026 00:00,11.03,,,,,,
+02DANL20,klimatološka,Danilovgrad,14.09.2026 00:00,17.80,,,,,,
+02DDOB30,klimatološka,Donja Dobrilovina,14.09.2026 00:00,8.01,,,,,,
+02GOBU30,klimatološka,Gornja Bukovica,14.09.2026 00:00,3.82,,,,,,
+02GRAD30,klimatološka,Gradac,14.09.2026 00:00,6.02,,,,,,
+02IVKO30,klimatološka,Ivanova korita,14.09.2026 00:00,11.88,0.00,,,,,
+02KOSA30,klimatološka,Kosanica,14.09.2026 00:00,-0.30,,,,,,
+02KOVR30,klimatološka,Kovren,14.09.2026 00:00,8.99,0.00,,,,,
+02KUKO30,klimatološka,Kučka korita,14.09.2026 00:00,10.65,0.00,,,,,
+02LKOT20,klimatološka,Luka Kotor,14.09.2026 00:26,24.70,,3.10,,7.30,,
+02MAMO30,klimatološka,Manastir Morača,14.09.2026 01:00,9.55,0.00,,,,,
+02MATE30,klimatološka,Matesevo,14.09.2026 00:00,5.45,0.00,,,,,
+02MOKR30,klimatološka,Mokro,14.09.2026 00:00,4.48,,,,,,
+02NJGV30,klimatološka,Njegovuđa,14.09.2026 00:00,2.34,,,,,,
+02PLZN20,klimatološka,Pluzine,14.09.2026 00:00,11.69,0.00,0.00,32,1.00,,
+02POSC30,klimatološka,Pošćenje,14.09.2026 00:00,6.40,,,,,,
+02SCPO30,klimatološka,Šćepan Polje,14.09.2026 00:00,7.79,,,,,,
+02STAB30,klimatološka,Stabna,14.09.2026 00:00,9.33,,,,,,
+02STIT30,klimatološka,Štitarica,14.09.2026 00:00,4.67,,,,,,
+02UBLI20,klimatološka,Ubli,14.09.2026 00:00,14.96,,,,,,
+02VELK30,klimatološka,Velika,14.09.2026 00:00,7.46,,,,,,
+02VELM20,klimatološka,Velimlje,14.09.2026 00:00,11.10,0.00,0.50,16,0.70,,
+02VIRP20,klimatološka,Virpazar,14.09.2026 00:00,15.00,0.00,,,,,
