@@ -25128,3 +25128,37 @@ sifra,tip,stanica,datum_vrijeme,T,RR,vjetar,smjer_kod,udar,insolacija,pritisak
 02VELK30,klimatološka,Velika,16.11.2026 01:00,8.24,,,,,,
 02VELM20,klimatološka,Velimlje,16.11.2026 01:00,10.00,0.00,1.90,14,2.40,,
 02VIRP20,klimatološka,Virpazar,16.11.2026 01:00,12.60,0.00,,,,,
+02BAR010,glavna,Bar,16.11.2026 07:50,17.60,0.10,3.50,18,,8.9,1015.1
+02BERA20,glavna,Berane,16.11.2026 07:00,6.00,0.00,0.90,14,2.20,,936.6
+02CTNJ10,glavna,Cetinje,16.11.2026 07:50,9.70,0.26,0.40,2,,4.3,941.7
+02HNOV10,glavna,Herceg Novi,16.11.2026 07:50,14.70,0.09,0.40,22,,7.0,1010.5
+02KOLS10,glavna,Kolašin,16.11.2026 07:50,9.20,0.00,0.80,14,,24.3,908.0
+02NIKS10,glavna,Nikšić,16.11.2026 07:50,10.90,0.00,4.10,14,,9.5,940.9
+02PDGR10,glavna,Podgorica,16.11.2026 07:50,12.50,0.07,1.20,18,,7.1,1009.6
+02PLJV10,glavna,Pljevlja,16.11.2026 07:50,4.90,0.00,0.20,22,,16.3,924.9
+02ULCN10,glavna,Ulcinj,16.11.2026 07:50,17.10,0.00,6.40,18,,44.4,1015.2
+02ZBLJ10,glavna,Žabljak,16.11.2026 07:50,7.30,0.05,5.50,16,,24.4,852.9
+02BIST20,klimatološka,Bistrica,16.11.2026 07:00,7.30,0.00,2.40,16,3.10,,
+02BOAN30,klimatološka,Boan,16.11.2026 07:00,8.77,,,,,,
+02BPLJ20,klimatološka,Bijelo Polje,16.11.2026 07:00,5.23,,,,,,
+02BUDV20,klimatološka,Budva,16.11.2026 07:00,15.28,,,,,,
+02DANL20,klimatološka,Danilovgrad,16.11.2026 07:00,12.10,0.00,,,,,
+02DDOB30,klimatološka,Donja Dobrilovina,16.11.2026 07:00,6.47,,,,,,
+02GOBU30,klimatološka,Gornja Bukovica,16.11.2026 07:00,7.58,,,,,,
+02GRAD30,klimatološka,Gradac,16.11.2026 07:00,5.41,,,,,,
+02IVKO30,klimatološka,Ivanova korita,16.11.2026 07:00,7.74,0.00,,,,,
+02KOSA30,klimatološka,Kosanica,16.11.2026 07:00,8.29,,,,,,
+02KOVR30,klimatološka,Kovren,16.11.2026 07:00,7.33,0.00,,,,,
+02LKOT20,klimatološka,Luka Kotor,16.11.2026 07:16,13.60,,1.30,,2.70,,
+02MATE30,klimatološka,Matesevo,16.11.2026 07:00,10.06,0.00,,,,,
+02MOKR30,klimatološka,Mokro,16.11.2026 07:00,10.05,,,,,,
+02NJGV30,klimatološka,Njegovuđa,16.11.2026 07:00,7.99,,,,,,
+02PLZN20,klimatološka,Pluzine,16.11.2026 06:00,10.74,0.00,1.70,20,4.60,,
+02POSC30,klimatološka,Pošćenje,16.11.2026 07:00,9.23,,,,,,
+02SCPO30,klimatološka,Šćepan Polje,16.11.2026 07:00,5.13,,,,,,
+02STAB30,klimatološka,Stabna,16.11.2026 07:00,8.74,,,,,,
+02STIT30,klimatološka,Štitarica,16.11.2026 07:00,9.66,,,,,,
+02UBLI20,klimatološka,Ubli,16.11.2026 07:00,11.81,,,,,,
+02VELK30,klimatološka,Velika,16.11.2026 07:00,8.49,,,,,,
+02VELM20,klimatološka,Velimlje,16.11.2026 07:00,10.40,0.00,1.50,12,2.30,,
+02VIRP20,klimatološka,Virpazar,16.11.2026 07:00,11.50,0.18,,,,,
