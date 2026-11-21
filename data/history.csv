@@ -25658,3 +25658,8 @@ sifra,tip,stanica,datum_vrijeme,T,RR,vjetar,smjer_kod,udar,insolacija,pritisak
 02VELK30,klimatološka,Velika,20.11.2026 22:00,8.35,,,,,,
 02VELM20,klimatološka,Velimlje,20.11.2026 22:00,7.80,0.00,2.20,12,2.60,,
 02VIRP20,klimatološka,Virpazar,20.11.2026 22:00,12.20,0.00,,,,,
+02BAR010,glavna,Bar,21.11.2026 08:20,13.00,0.00,2.20,10,,196.0,1015.1
+02BERA20,glavna,Berane,21.11.2026 08:00,4.78,0.00,1.60,6,3.20,,935.44
+02BIST20,klimatološka,Bistrica,21.11.2026 08:00,3.70,0.00,1.80,2,2.00,,
+02BOAN30,klimatološka,Boan,21.11.2026 08:00,1.74,,,,,,
+02BPLJ20,klimatološka,Bijelo Polje,21.11.2026 08:00,4.63,,,,,,
